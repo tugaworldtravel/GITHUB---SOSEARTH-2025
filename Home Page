@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - SOS EARTH</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Referência ao CSS, se houver -->
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="home.html">Home</a></li>
+                <li><a href="index.html">Mapa Interativo</a></li> <!-- Link para a página do mapa -->
+                <!-- Adicione outros links aqui -->
+            </ul>
+        </nav>
+    </header>
+
+    <section>
+        <h1>Bem-vindo ao SOS EARTH</h1>
+        <p>Plataforma para ajudar na documentação e mapeamento dos eventos climáticos globais.</p>
+        <p>Use o menu para navegar pelas diferentes seções do site.</p>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 SOS EARTH - Todos os direitos reservados.</p>
+    </footer>
+</body>
+</html>
