@@ -33,6 +33,13 @@
         }
 
         #header {
+            margin: auto;
+            width: 100%;
+            position: relative;
+            z-index: 5;
+        }
+
+        #header {
             display: none; /* Removido o cabeçalho */
         }
 
@@ -107,6 +114,7 @@
         }
 
         @media (max-width: 750px) {
+
             .centered,
             .lefty,
             .righty,
@@ -129,7 +137,7 @@
     <div id="map"></div>
     <div id="story"></div>
 
-    <script src="./config.js"></script>
+    <script src="./config-terra.js"></script>
     <script>
         var initLoad = true;
         var layerTypes = {
@@ -173,30 +181,29 @@
 
         var header = document.createElement('div');
 
-        // Remover o cabeçalho
-        // if (config.title) {
-        //     var titleText = document.createElement('h1');
-        //     titleText.innerText = config.title;
-        //     header.appendChild(titleText);
-        // }
+        if (config.title) {
+            var titleText = document.createElement('h1');
+            titleText.innerText = config.title;
+            header.appendChild(titleText);
+        }
 
-        // if (config.subtitle) {
-        //     var subtitleText = document.createElement('h2');
-        //     subtitleText.innerText = config.subtitle;
-        //     header.appendChild(subtitleText);
-        // }
+        if (config.subtitle) {
+            var subtitleText = document.createElement('h2');
+            subtitleText.innerText = config.subtitle;
+            header.appendChild(subtitleText);
+        }
 
-        // if (config.byline) {
-        //     var bylineText = document.createElement('p');
-        //     bylineText.innerText = config.byline;
-        //     header.appendChild(bylineText);
-        // }
+        if (config.byline) {
+            var bylineText = document.createElement('p');
+            bylineText.innerText = config.byline;
+            header.appendChild(bylineText);
+        }
 
-        // if (header.innerText.length > 0) {
-        //     header.classList.add(config.theme);
-        //     header.setAttribute('id', 'header');
-        //     story.appendChild(header);
-        // }
+        if (header.innerText.length > 0) {
+            header.classList.add(config.theme);
+            header.setAttribute('id', 'header');
+            story.appendChild(header);
+        }
 
         config.chapters.forEach((record, idx) => {
             var container = document.createElement('div');
@@ -281,10 +288,29 @@
         var scroller = scrollama();
 
         map.on("load", function () {
+            if (config.use3dTerrain) {
+                map.addSource('mapbox-dem', {
+                    'type': 'raster-dem',
+                    'url': 'mapbox://mapbox.mapbox-terrain-dem-v1',
+                    'tileSize': 512,
+                    'maxzoom': 14
+                });
+                map.setTerrain({ 'source': 'mapbox-dem', 'exaggeration': 1.5 });
+                map.addLayer({
+                    'id': 'sky',
+                    'type': 'sky',
+                    'paint': {
+                        'sky-type': 'atmosphere',
+                        'sky-atmosphere-sun': [0.0, 0.0],
+                        'sky-atmosphere-sun-intensity': 15
+                    }
+                });
+            };
+
             scroller
                 .setup({
                     step: '.step',
-                    offset: 0.7,  // Aumentando o offset para garantir que o capítulo anterior tenha mais espaço
+                    offset: 0.5,
                     progress: true
                 })
                 .onStepEnter(async response => {
@@ -293,10 +319,25 @@
 
                     response.element.classList.add('active');
 
-                    // Verifica se o capítulo é 'slug-style-id' e aplica a imagem de fundo
-                    if (chapter.id === 'slug-style-id') {
-                        document.body.style.backgroundImage = "url('./assets/AVEIRO.jpeg')";
-                        document.body.style.backgroundSize = 'cover';
+                    // Se o capítulo for 'image-chapter', remova o mapa
+                    if (chapter.id === 'image-chapter') {
+                        document.getElementById('map').style.display = 'none';  // Ocultar o mapa
                     }
 
-                    // Verifica se o capítulo tem animação de rotação (rotateTo) ou outra
+                    // Se o capítulo for diferente, mostrar o mapa novamente
+                    if (chapter.id !== 'image-chapter') {
+                        document.getElementById('map').style.display = 'block';  // Mostrar o mapa
+                    }
+
+                    map[chapter.mapAnimation || 'flyTo'](chapter.location);
+                })
+                .onStepExit(response => {
+                    response.element.classList.remove('active');
+                });
+        });
+
+    </script>
+
+</body>
+
+</html>

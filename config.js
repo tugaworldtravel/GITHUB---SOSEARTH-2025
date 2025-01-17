@@ -25,13 +25,13 @@ var config = {
             hidden: true,
             title: 'World',
             location: {
-                center: [-10, 20],
+                center: [20, 40],
                 zoom: 2.3,
                 pitch: -10,
                 bearing: 0
             },
             mapAnimation: 'flyTo',
-            rotateAnimation: true,
+            rotateAnimation: false,
             callback: '',
             onChapterEnter: [],
             onChapterExit: []
@@ -41,7 +41,7 @@ var config = {
             alignment: 'left',
             hidden: false,
             title: 'Portugal',
-            image: './assets/san-fran.jpeg',
+            image: './assets/AVEIRO.jpeg',
             description: 'The first chapter contains a title, image, and camera view for San Francisco, California. Update the chapter data to make it your own.',
             location: {
                 center: [-8.3675, 40.7333], // Updated coordinates for Sever do Vouga, Portugal
