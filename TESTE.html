@@ -75,7 +75,7 @@
         }
 
         .step {
-            padding-bottom: 100vh;
+            padding-bottom: 70vh; /* Aumentar o scroll dos capítulos */
             opacity: 0.25;
         }
 
@@ -129,21 +129,23 @@
             height: auto;
         }
 
-        .full-screen-image {
-            width: 100vw;
-            height: 100vh;
+        .cover-image {
+            width: 80vw; /* Ajuste o tamanho da imagem conforme necessário */
+            height: auto;
             object-fit: cover;
-            opacity: 0; /* Máxima opacidade */
-            z-index: 10; /* Trazer a imagem para a frente */
-            position: relative;
+            z-index: 1000; /* Trazer a imagem para a frente */
+            position: fixed; /* Fixar a imagem em relação à viewport */
+            top: 60vh; /* Ajuste a posição conforme necessário */
+            left: 10vw; /* Ajuste a posição conforme necessário */
+            display: none; /* Inicialmente oculta */
         }
 
         .scroll-container {
-            padding-bottom: 200vh; /* Ajuste o valor para configurar o tempo/tamanho do scroll */
+            padding-bottom: 1200vh; /* Dobrar o valor para configurar o tempo/tamanho do scroll */
         }
 
         .separator {
-            height: 220vh; /* Ajuste a altura da separação */
+            height: 2vh; /* Ajuste a altura da separação para algo mais fino */
             background-color: black; /* Cor da barra de separação */
         }
     </style>
@@ -152,6 +154,7 @@
 <body>
     <div id="map"></div>
     <div id="story"></div>
+    <img id="highlight-image" src="./assets/SOS_3.jpg" class="cover-image" /> <!-- Adicione a imagem aqui -->
 
     <script src="./config-TESTE.js"></script>
     <script>
@@ -316,20 +319,30 @@
                         map.setStyle('mapbox://styles/tugaworldtravel/cm5wq05a8004501shbxlwclp6'); // Estilo padrão para outros capítulos
                     }
 
-                    if (config.showMarkers && (chapter.id === 'Portugal-chapter' || chapter.id === 'Geneva-chapter' || chapter.id === 'DC-chapter' || chapter.id === 'Argentina-chapter' || chapter.id === 'Tokyo-chapter')) {
+                    if (config.showMarkers && (chapter.id === 'DC-chapter' || chapter.id === 'Geneva-chapter' || chapter.id === 'Argentina-chapter' || chapter.id === 'Tokyo-chapter')) {
                         marker.setLngLat(chapter.location.center).addTo(map);
                     } else {
                         marker.remove();
                     }
 
-                    // Verifica se o capítulo é 'Portugal-chapter' ou 'Namibia-chapter', remova o mapa
-                    if (chapter.id === 'Portugal-chapter' || chapter.id === 'Namibia-chapter') {
+                    // Verifica se o capítulo é 'DC-chapter', remova o mapa
+                    if (chapter.id === 'DC-chapter') {
                         document.getElementById('map').style.display = 'none';  // Ocultar o mapa
                     }
 
                     // Se o capítulo for diferente, mostrar o mapa novamente
-                    if (chapter.id !== 'Portugal-chapter' && chapter.id !== 'Namibia-chapter') {
+                    if (chapter.id !== 'DC-chapter') {
                         document.getElementById('map').style.display = 'block';  // Mostrar o mapa
+                    }
+
+                    // Mostrar a imagem antes do "DC-chapter"
+                    var highlightImage = document.getElementById('highlight-image');
+                    if (chapter.id === 'DC-chapter') {
+                        highlightImage.style.display = 'none';
+                    } else if (chapter.id === 'world-chapter') {
+                        highlightImage.style.display = 'block';
+                    } else {
+                        highlightImage.style.display = 'none';
                     }
 
                     map[chapter.mapAnimation || 'flyTo'](chapter.location);
@@ -338,22 +351,34 @@
                     response.element.classList.remove('active');
                 });
 
-            // Inserir um novo elemento após um capítulo específico
-            var genevaChapter = document.getElementById('Portugal-chapter');
+            // Ajustar dinamicamente o padding-bottom dos capítulos até o "DC-chapter"
+            config.chapters.forEach((record, idx) => {
+                var chapterElement = document.getElementById(record.id);
+                if (record.id === 'world-chapter') {
+                    chapterElement.style.paddingBottom = '10vh'; // Diminuir o scroll do "World-chapter"
+                } else if (record.id !== 'DC-chapter') {
+                    chapterElement.style.paddingBottom = '70vh'; // Ajuste o valor conforme necessário
+                } else {
+                    return false; // Parar o loop ao encontrar o "DC-chapter"
+                }
+            });
+
+            // Inserir um novo elemento após o "World-chapter"
+            var worldChapter = document.getElementById('world-chapter');
             var newElementContainer = document.createElement('div');
             newElementContainer.classList.add('step', 'scroll-container'); // Adicione as classes 'step' e 'scroll-container' para comportamento de scroll
-            newElementContainer.style.paddingBottom = '10vh'; // Ajuste o valor para configurar o tempo/tamanho do scroll
+            newElementContainer.style.paddingBottom = '250vh'; // Dobrar o valor para configurar o tempo/tamanho do scroll
             var newElement = document.createElement('img');
             newElement.src = './assets/SOS_3.jpg';
-            newElement.classList.add('cover'); // Adicione a classe para definir o tamanho
-            newElement.style.opacity = '0.8'; // Máxima opacidade
+            newElement.classList.add('cover-image'); // Adicione a classe para definir o tamanho e estilo
+            newElement.style.opacity = '1'; // Máxima opacidade
             newElementContainer.appendChild(newElement);
-            genevaChapter.parentNode.insertBefore(newElementContainer, genevaChapter.nextSibling);
+            worldChapter.parentNode.insertBefore(newElementContainer, worldChapter.nextSibling);
 
             // Adicionar separação entre capítulos e a fotografia
             var separatorBefore = document.createElement('div');
             separatorBefore.classList.add('separator'); // Adicione a classe 'separator' para a barra preta
-            genevaChapter.parentNode.insertBefore(separatorBefore, newElementContainer);
+            worldChapter.parentNode.insertBefore(separatorBefore, newElementContainer);
 
             var separatorAfter = document.createElement('div');
             separatorAfter.classList.add('separator'); // Adicione a classe 'separator' para a barra preta
