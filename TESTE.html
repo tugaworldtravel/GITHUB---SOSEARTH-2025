@@ -105,7 +105,7 @@
 
         /* Classes para os capítulos específicos */
         .background-portugal {
-            background-image: url('./assets/SOS_14.jpg');
+            background-image: url('./assets/AVEIRO.jpeg');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -115,7 +115,7 @@
         }
 
         .background-namibia {
-            background-image: url('./assets/SOS_15.jpg');
+            background-image: url('./assets/SOS_15.JPG');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -125,8 +125,26 @@
         }
 
         .resize-image {
-            width: 1000vh; /* Defina o tamanho desejado aqui */
-            height: 1000px; /* Defina o tamanho desejado aqui */
+            width: 200px; /* Defina o tamanho desejado aqui */
+            height: auto;
+        }
+
+        .full-screen-image {
+            width: 100vw;
+            height: 100vh;
+            object-fit: cover;
+            opacity: 0; /* Máxima opacidade */
+            z-index: 10; /* Trazer a imagem para a frente */
+            position: relative;
+        }
+
+        .scroll-container {
+            padding-bottom: 200vh; /* Ajuste o valor para configurar o tempo/tamanho do scroll */
+        }
+
+        .separator {
+            height: 220vh; /* Ajuste a altura da separação */
+            background-color: black; /* Cor da barra de separação */
         }
     </style>
 </head>
@@ -292,18 +310,18 @@
                     response.element.classList.add('active');
 
                     // Verifica se o capítulo é 'DC-chapter' e aplica o Style (Mapa) específico
- if (chapter.id === 'DC-chapter'|| chapter.id === 'Geneva-chapter') {
-        map.setStyle(chapter.style);
-        
-    } else {
-        map.setStyle('mapbox://styles/tugaworldtravel/cm5wq05a8004501shbxlwclp6'); // Estilo padrão para outros capítulos
-    }
+                    if (chapter.id === 'DC-chapter' || chapter.id === 'Geneva-chapter') {
+                        map.setStyle(chapter.style);
+                    } else {
+                        map.setStyle('mapbox://styles/tugaworldtravel/cm5wq05a8004501shbxlwclp6'); // Estilo padrão para outros capítulos
+                    }
 
-    if (config.showMarkers && (chapter.id === 'Portugal-chapter' || chapter.id === 'Geneva-chapter'|| chapter.id === 'DC-chapter' || chapter.id === 'Argentina-chapter'|| chapter.id === 'Tokyo-chapter')) {
-    marker.setLngLat(chapter.location.center).addTo(map);
-} else {
-    marker.remove();
-}  
+                    if (config.showMarkers && (chapter.id === 'Portugal-chapter' || chapter.id === 'Geneva-chapter' || chapter.id === 'DC-chapter' || chapter.id === 'Argentina-chapter' || chapter.id === 'Tokyo-chapter')) {
+                        marker.setLngLat(chapter.location.center).addTo(map);
+                    } else {
+                        marker.remove();
+                    }
+
                     // Verifica se o capítulo é 'Portugal-chapter' ou 'Namibia-chapter', remova o mapa
                     if (chapter.id === 'Portugal-chapter' || chapter.id === 'Namibia-chapter') {
                         document.getElementById('map').style.display = 'none';  // Ocultar o mapa
@@ -319,6 +337,27 @@
                 .onStepExit(response => {
                     response.element.classList.remove('active');
                 });
+
+            // Inserir um novo elemento após um capítulo específico
+            var genevaChapter = document.getElementById('Portugal-chapter');
+            var newElementContainer = document.createElement('div');
+            newElementContainer.classList.add('step', 'scroll-container'); // Adicione as classes 'step' e 'scroll-container' para comportamento de scroll
+            newElementContainer.style.paddingBottom = '10vh'; // Ajuste o valor para configurar o tempo/tamanho do scroll
+            var newElement = document.createElement('img');
+            newElement.src = './assets/SOS_3.jpg';
+            newElement.classList.add('cover'); // Adicione a classe para definir o tamanho
+            newElement.style.opacity = '0.8'; // Máxima opacidade
+            newElementContainer.appendChild(newElement);
+            genevaChapter.parentNode.insertBefore(newElementContainer, genevaChapter.nextSibling);
+
+            // Adicionar separação entre capítulos e a fotografia
+            var separatorBefore = document.createElement('div');
+            separatorBefore.classList.add('separator'); // Adicione a classe 'separator' para a barra preta
+            genevaChapter.parentNode.insertBefore(separatorBefore, newElementContainer);
+
+            var separatorAfter = document.createElement('div');
+            separatorAfter.classList.add('separator'); // Adicione a classe 'separator' para a barra preta
+            newElementContainer.parentNode.insertBefore(separatorAfter, newElementContainer.nextSibling);
         });
 
     </script>
