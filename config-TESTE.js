@@ -1,6 +1,4 @@
-
 var config = {
-    // style: 'mapbox://styles/mapbox/streets-v12',
     accessToken: 'pk.eyJ1IjoidHVnYXdvcmxkdHJhdmVsIiwiYSI6ImNtNXZkMzEwMzAwbGUyanF6dXVtOHQ5anoifQ.9VMIO6xw7aUD_uSileHqSw',
     showMarkers: true,
     markerColor: '#3FB1CE',
@@ -10,21 +8,14 @@ var config = {
     },
     insetPosition: 'bottom-right',
     theme: 'dark',
-    use3dTerrain: false, // Set true for enabling 3D maps.
+    use3dTerrain: false,
     auto: false,
-    title: 'SOS EARTH',
-    subtitle: 'The Storytelling Template helps you create an awesome animated map story with ease.',
-    byline: 'By Daniel Rodrigues',
-    footer: 'Source: source citations, etc. <br> Created using <a href="https://github.com/mapbox/storytelling" target="_blank">Mapbox Storytelling</a> template.',
-    
-    // Atualizando o caminho do index
-    index: 'earth.html',  // Agora, "earth.html" será a página principal no config
+    footer: 'Fonte: Dados relevantes. Criado com <a href="https://github.com/mapbox/storytelling" target="_blank">Mapbox Storytelling</a>.',
 
     chapters: [
         {
-            id: 'slug-style-id',
-            hidden: true,
-            title: 'World',
+            id: 'world-chapter',
+            hidden: true, // Esconder o capítulo "Mundo"
             location: {
                 center: [20, 40],
                 zoom: 2.3,
@@ -32,38 +23,48 @@ var config = {
                 bearing: 0
             },
             mapAnimation: 'flyTo',
-            rotateAnimation: false,
-            callback: '',
             onChapterEnter: [],
             onChapterExit: []
         },
         {
             id: 'Portugal-chapter',
             alignment: 'left',
-            hidden: false,
-            title: 'Portugal',
-            image: './assets/AVEIRO.jpeg',
-            description: 'The first chapter contains a title, image, and camera view for San Francisco, California. Update the chapter data to make it your own.',
+            title: '',
+            image: '',
+            description: '',
             location: {
-                center: [-8.3675, 40.7333], // Updated coordinates for Sever do Vouga, Portugal
+                center: [-8.3675, 40.7333],
                 zoom: 8.5,
                 pitch: 20,
                 bearing: 0
             },
             mapAnimation: 'flyTo',
-            rotateAnimation: false,
-            callback: '',
-            onChapterEnter: [],
-            onChapterExit: []
+            onChapterEnter: [
+                () => {
+                    document.body.style.backgroundImage = "url('./assets/SOS_14.jpg')";
+                    document.body.style.backgroundSize = 'cover';
+                    document.body.style.backgroundPosition = 'center';
+                    document.body.style.backgroundAttachment = 'fixed';
+                    document.body.style.height = '100vh'; // Garantir que a imagem ocupa toda a tela
+                    document.body.style.width = '100vw'; // Garantir que a imagem ocupa toda a largura
+                    document.body.style.margin = '0'; // Remover margens
+                    document.getElementById('map').style.display = 'none';
+                }
+            ],
+            onChapterExit: [
+                () => {
+                    document.body.style.backgroundImage = "none";
+                    document.getElementById('map').style.display = 'block';
+                }
+            ]
         },
         {
             id: 'DC-chapter',
             alignment: 'right',
-            hidden: false,
             title: 'Washington, D.C.',
             style: 'mapbox://styles/tugaworldtravel/cm5wfmwp600rx01s34i715irn',
             image: './assets/washington-dc.jpg',
-            description: 'The second chapter flies to Washington, D.C., updates the camera pitch, and slowly rotates. Washington, D.C., the capital of the United States, is a vibrant city known for its iconic landmarks.',
+            description: 'A vibrante capital dos EUA, conhecida pelos seus marcos icónicos.',
             location: {
                 center: [-77.020636, 38.886900],
                 zoom: 8.5,
@@ -72,18 +73,48 @@ var config = {
             },
             mapAnimation: 'flyTo',
             rotateAnimation: true,
-            callback: '',
             onChapterEnter: [],
             onChapterExit: []
         },
         {
+            id: 'Namibia-chapter',
+            alignment: 'center',
+            title: '',
+            image: '',
+            description: '',
+            location: {
+                center: [18.4904, -22.9576],
+                zoom: 5,
+                pitch: 0,
+                bearing: 0
+            },
+            mapAnimation: 'flyTo',
+            onChapterEnter: [
+                () => {
+                    document.body.style.backgroundImage = "url('./assets/SOS_15.jgp')";
+                    document.body.style.backgroundSize = 'cover';
+                    document.body.style.backgroundPosition = 'center';
+                    document.body.style.backgroundAttachment = 'fixed';
+                    document.body.style.height = '100vh'; // Garantir que a imagem ocupa toda a tela
+                    document.body.style.width = '100vw'; // Garantir que a imagem ocupa toda a largura
+                    document.body.style.margin = '0'; // Remover margens
+                    document.getElementById('map').style.display = 'none';
+                }
+            ],
+            onChapterExit: [
+                () => {
+                    document.body.style.backgroundImage = "none";
+                    document.getElementById('map').style.display = 'block';
+                }
+            ]
+        },
+        {
             id: 'Geneva-chapter',
             alignment: 'left',
-            hidden: false,
-            title: 'Geneva',
-            image: './assets/geneva.jpg',
+            title: 'Genebra',
             style: 'mapbox://styles/tugaworldtravel/cm5idrk8q001w01rzd6ts6zy1',
-            description: 'Geneva, Switzerland, is a picturesque city nestled along the shores of Lake Geneva, surrounded by the Alps and Jura mountains.',
+            image: './assets/geneva.jpg',
+            description: 'Genebra, Suíça: uma cidade pitoresca junto ao Lago Genebra.',
             location: {
                 center: [6.15116, 46.20595],
                 zoom: 12.52,
@@ -91,18 +122,15 @@ var config = {
                 bearing: 0.00
             },
             mapAnimation: 'flyTo',
-            rotateAnimation: false,
-            callback: '',
             onChapterEnter: [],
             onChapterExit: []
         },
         {
             id: 'Argentina-chapter',
             alignment: 'fully',
-            hidden: false,
             title: 'Buenos Aires',
             image: './assets/buenos-aires.jpg',
-            description: 'Buenos Aires, the capital of Argentina, is a dynamic city known for its European-inspired architecture, vibrant tango culture, and rich culinary scene.',
+            description: 'Buenos Aires, a capital da Argentina, conhecida pela cultura de tango.',
             location: {
                 center: [-58.54195, -34.71600],
                 zoom: 4,
@@ -110,18 +138,15 @@ var config = {
                 bearing: 0
             },
             mapAnimation: 'flyTo',
-            rotateAnimation: false,
-            callback: '',
             onChapterEnter: [],
             onChapterExit: []
         },
         {
             id: 'Tokyo-chapter',
             alignment: 'center',
-            hidden: false,
-            title: 'Tokyo',
+            title: 'Tóquio',
             image: './assets/tokyo.jpg',
-            description: 'Tokyo, Japan\'s bustling capital, is known for its skyscrapers, shopping, and pop culture.',
+            description: 'Tóquio, a capital do Japão, é conhecida pelos seus arranha-céus e cultura pop.',
             location: {
                 center: [139.6917, 35.6895],
                 zoom: 10,
@@ -129,8 +154,6 @@ var config = {
                 bearing: 0
             },
             mapAnimation: 'flyTo',
-            rotateAnimation: false,
-            callback: '',
             onChapterEnter: [],
             onChapterExit: []
         }
