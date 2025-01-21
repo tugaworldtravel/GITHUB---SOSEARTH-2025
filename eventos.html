@@ -5,13 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home - SOS EARTH</title>
     <style>
-        /* Estilo para a Home Page */
         body, html {
             margin: 0;
             padding: 0;
             height: 100%;
             font-family: Arial, sans-serif;
-            overflow-x: hidden;  /* Evita que a página tenha rolagem horizontal */
+            overflow-x: hidden; /* Evita que a página tenha rolagem horizontal */
         }
 
         /* Estilo para a primeira imagem (AVEIRO.jpeg) */
@@ -55,27 +54,9 @@
             color: #f0f0f0;
         }
 
-        /* Título centralizado */
-        .home-text {
-            text-align: center;
-        }
-
-        .home-text h1 {
-            font-size: 8em;
-            margin-bottom: 20px;
-        }
-
-        .home-text p {
-            font-size: 1.5em;
-        }
-
-        .autor {
-            font-size: 1em;
-        }
-
-        /* Estilo para a segunda imagem (SOS_14.jpeg) */
+        /* Estilo para a segunda imagem (SOS_14.JPG) */
         .second-image-container {
-            background-image: url('assets/SOS_14.JPG'); /* Caminho da imagem SOS_14 */
+            background-image: url('assets/SOS_14.JPG'); /* Caminho da imagem SOS_14.JPG */
             background-size: cover;
             background-position: center;
             height: 100vh;  /* A imagem ocupa toda a tela na segunda seção */
@@ -90,6 +71,12 @@
             text-align: center;
             font-size: 2em;
             color: white;
+        }
+
+        /* Estilo para o mapa */
+        #map {
+            height: 100vh;
+            width: 100%;
         }
 
         /* Estilo para a separação de capítulos */
@@ -114,7 +101,7 @@
     <!-- Separação entre capítulos -->
     <div class="section-separator"></div>
 
-    <!-- Segunda seção com a imagem "SOS_14.jpeg" -->
+    <!-- Segunda seção com a imagem "SOS_14.JPG" -->
     <div class="second-image-container">
         <div class="second-text">
             <h2>Juntos podemos combater as alterações climáticas</h2>
@@ -125,6 +112,9 @@
     <!-- Separação entre capítulos -->
     <div class="section-separator"></div>
 
+    <!-- Terceira seção com o mapa interativo -->
+    <div id="map"></div>
+
     <!-- Navegação no canto superior direito -->
     <nav>
         <ul>
@@ -134,5 +124,51 @@
             <!-- Outros links podem ser adicionados aqui -->
         </ul>
     </nav>
+
+    <!-- Scripts -->
+    <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v2.5.0/mapbox-gl.js"></script>
+    <script src="https://unpkg.com/scrollama@2.1.0/dist/scrollama.min.js"></script>
+    <script>
+        // Inicializando o mapa com o estilo fornecido
+        const map = new mapboxgl.Map({
+            container: 'map',  // O id do elemento onde o mapa vai ser exibido
+            style: 'mapbox://styles/tugaworldtravel/cm5wfmwp600rx01s34i715irn', // Estilo do mapa
+            center: [-8.3675, 40.7333], // Coordenadas iniciais (por exemplo, Portugal)
+            zoom: 8.5,  // Nível de zoom inicial
+            accessToken: 'pk.eyJ1IjoidHVnYXdvcmxkdHJhdmVsIiwiYSI6ImNtNXZkMzEwMzAwbGUyanF6dXVtOHQ5anoifQ.9VMIO6xw7aUD_uSileHqSw'  // Adicionando o token do Mapbox
+        });
+
+        // Configuração do Scrollama para controlar os capítulos
+        const scroller = scrollama();
+
+        scroller
+            .setup({
+                step: '.step',
+                offset: 0.5,
+                progress: true
+            })
+            .onStepEnter(async response => {
+                const chapterId = response.element.getAttribute('data-scrollama-index');
+                if (chapterId === "0") {
+                    // Capítulo 1: Mapa
+                    map.flyTo({
+                        center: [-8.3675, 40.7333],
+                        zoom: 8.5
+                    });
+                }
+                else if (chapterId === "1") {
+                    // Capítulo 2: Imagem
+                    document.body.style.backgroundImage = 'url("assets/SOS_14.JPG")';
+                    document.body.style.backgroundSize = 'cover';
+                    document.body.style.backgroundPosition = 'center';
+                    document.body.style.backgroundAttachment = 'fixed';
+                    document.getElementById('map').style.display = 'none';  // Esconde o mapa
+                }
+            })
+            .onStepExit(response => {
+                document.getElementById('map').style.display = 'block';  // Mostra o mapa
+                document.body.style.backgroundImage = 'none';  // Remove o fundo
+            });
+    </script>
 </body>
 </html>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eventos - SOS EARTH</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Estilo para a imagem AVEIRO */
+        .home-container {
+            background-image: url('assets/AVEIRO.jpeg');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+        }
+
+        /* Estilo para o mapa */
+        #map {
+            height: 100vh;
+            width: 100%;
+        }
+
+        /* Estilo para os capítulos de imagem */
+        .second-image-container {
+            background-image: url('assets/SOS_14.JPG');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+        }
+
+        /* Separação entre os capítulos */
+        .section-separator {
+            width: 100%;
+            height: 10px;
+            background-color: black;
+        }
+
+        .section-text {
+            text-align: center;
+            font-size: 2em;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Primeira seção com a imagem AVEIRO -->
+    <div class="home-container">
+        <h1>SOS EARTH</h1>
+    </div>
+
+    <!-- Separação entre os capítulos -->
+    <div class="section-separator"></div>
+
+    <!-- Segunda seção com a imagem SOS_14.JPG -->
+    <div class="second-image-container">
+        <div class="section-text">
+            <h2>Juntos podemos combater as alterações climáticas</h2>
+        </div>
+    </div>
+
+    <!-- Separação entre os capítulos -->
+    <div class="section-separator"></div>
+
+    <!-- Terceira seção com o mapa interativo -->
+    <div id="map"></div>
+
+    <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v2.5.0/mapbox-gl.js"></script>
+    <script src="https://unpkg.com/scrollama@2.1.0/dist/scrollama.min.js"></script>
+    <script>
+        // Inicializando o mapa
+        const map = new mapboxgl.Map({
+            container: 'map',
+            style: 'mapbox://styles/tugaworldtravel/cm5wfmwp600rx01s34i715irn',
+            center: [-77.020636, 38.886900],
+            zoom: 8.5,
+            accessToken: 'pk.eyJ1IjoidHVnYXdvcmxkdHJhdmVsIiwiYSI6ImNtNXZkMzEwMzAwbGUyanF6dXVtOHQ5anoifQ.9VMIO6xw7aUD_uSileHqSw'
+        });
+
+        // Configuração do scroll
+        const scroller = scrollama();
+
+        scroller
+            .setup({
+                step: '.step',
+                offset: 0.5,
+                progress: true
+            })
+            .onStepEnter(async response => {
+                const chapterId = response.element.getAttribute('data-scrollama

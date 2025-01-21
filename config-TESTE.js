@@ -1,4 +1,5 @@
 var config = {
+    // style: 'mapbox://styles/mapbox/streets-v12',
     accessToken: 'pk.eyJ1IjoidHVnYXdvcmxkdHJhdmVsIiwiYSI6ImNtNXZkMzEwMzAwbGUyanF6dXVtOHQ5anoifQ.9VMIO6xw7aUD_uSileHqSw',
     showMarkers: true,
     markerColor: '#3FB1CE',
@@ -8,13 +9,15 @@ var config = {
     },
     insetPosition: 'bottom-right',
     theme: 'dark',
-    use3dTerrain: false,
+    use3dTerrain: false, // Set true for enabling 3D maps.
     auto: false,
     title: 'SOS EARTH',
     subtitle: 'The Storytelling Template helps you create an awesome animated map story with ease.',
     byline: 'By Daniel Rodrigues',
     footer: 'Source: source citations, etc. <br> Created using <a href="https://github.com/mapbox/storytelling" target="_blank">Mapbox Storytelling</a> template.',
-    index: 'terra.html',
+    
+    // Atualizando o caminho do index
+    index: 'TESTE.html',  // Agora, "TESTE.html" será a página principal no config
 
     chapters: [
         {
@@ -32,39 +35,6 @@ var config = {
             callback: '',
             onChapterEnter: [],
             onChapterExit: []
-        },
-        {
-            id: 'image-chapter',
-    hidden: false,
-    title: '',  // Removendo título
-    image: './assets/AVEIRO.jpeg',  // Imagem que será o único conteúdo
-    location: {
-        center: [0, 0], // Não relevante para imagens, mas adicionei para manter a consistência
-        zoom: 1,
-        pitch: 0,
-        bearing: 0
-    },
-    mapAnimation: 'flyTo', // A animação de mapa não será utilizada
-    rotateAnimation: false,
-    callback: '',
-    onChapterEnter: [
-        // No onChapterEnter, configuramos o fundo da página
-        () => {
-            document.body.style.backgroundImage = "url('./assets/AVEIRO.jpeg')";
-document.body.style.backgroundSize = '100% 100%'; // Ajusta a imagem para ocupar toda a tela
-document.body.style.backgroundPosition = 'center'; // Centraliza a imagem
-document.body.style.backgroundAttachment = 'fixed'; // A imagem não se move ao rolar a página
-document.body.style.backgroundColor = 'white'; // Fundo branco para o restante da página
-document.getElementById('map').style.display = 'none'; // Esconde o mapa
-        }
-    ],
-    onChapterExit: [
-        () => {
-            document.body.style.backgroundImage = "none";  // Remove a imagem do fundo
-            document.body.style.backgroundColor = 'white'; // Fundo branco, sem interferência de qualquer outro estilo
-            document.getElementById('map').style.display = 'block';  // Exibe o mapa novamente após sair deste capítulo
-        }
-            ]
         },
         {
             id: 'Portugal-chapter',
