@@ -75,7 +75,7 @@
         }
 
         .step {
-            padding-bottom: 70vh; /* Aumentar o scroll dos capítulos */
+            padding-bottom: 100vh; /* Aumentar o scroll dos capítulos */
             opacity: 0.25;
         }
 
@@ -130,14 +130,15 @@
         }
 
         .cover-image {
-            width: 80vw; /* Ajuste o tamanho da imagem conforme necessário */
-            height: auto;
+            width: 100vw; /* Full screen */
+            height: 100vh; /* Full screen */
             object-fit: cover;
             z-index: 1000; /* Trazer a imagem para a frente */
-            position: fixed; /* Fixar a imagem em relação à viewport */
-            top: 60vh; /* Ajuste a posição conforme necessário */
-            left: 10vw; /* Ajuste a posição conforme necessário */
+            position: absolute; /* Fixar a imagem em relação à viewport */
+            top: 0; /* Ajuste a posição conforme necessário */
+            left: 0; /* Ajuste a posição conforme necessário */
             display: none; /* Inicialmente oculta */
+            transform: /* Reduzir o tamanho da imagem em 10% */
         }
 
         .scroll-container {
@@ -145,7 +146,7 @@
         }
 
         .separator {
-            height: 2vh; /* Ajuste a altura da separação para algo mais fino */
+            height: 5vh; /* Ajuste a altura da separação para algo mais fino */
             background-color: black; /* Cor da barra de separação */
         }
     </style>
@@ -355,9 +356,9 @@
             config.chapters.forEach((record, idx) => {
                 var chapterElement = document.getElementById(record.id);
                 if (record.id === 'world-chapter') {
-                    chapterElement.style.paddingBottom = '10vh'; // Diminuir o scroll do "World-chapter"
+                    chapterElement.style.paddingBottom = '125vh'; // Diminuir o scroll do "World-chapter"
                 } else if (record.id !== 'DC-chapter') {
-                    chapterElement.style.paddingBottom = '70vh'; // Ajuste o valor conforme necessário
+                    chapterElement.style.paddingBottom = '125vh'; // Aumentar o tempo de scroll dos capítulos
                 } else {
                     return false; // Parar o loop ao encontrar o "DC-chapter"
                 }
@@ -366,8 +367,8 @@
             // Inserir um novo elemento após o "World-chapter"
             var worldChapter = document.getElementById('world-chapter');
             var newElementContainer = document.createElement('div');
-            newElementContainer.classList.add('step', 'scroll-container'); // Adicione as classes 'step' e 'scroll-container' para comportamento de scroll
-            newElementContainer.style.paddingBottom = '250vh'; // Dobrar o valor para configurar o tempo/tamanho do scroll
+            newElementContainer.classList.add('scroll-container'); // Adicione a classe 'scroll-container' para comportamento de scroll
+            newElementContainer.style.paddingBottom = '125vh'; // Dobrar o valor para configurar o tempo/tamanho do scroll
             var newElement = document.createElement('img');
             newElement.src = './assets/SOS_3.jpg';
             newElement.classList.add('cover-image'); // Adicione a classe para definir o tamanho e estilo
