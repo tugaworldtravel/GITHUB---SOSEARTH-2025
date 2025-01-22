@@ -148,6 +148,11 @@
             height: 5vh; /* Ajuste a altura da separação para algo mais fino */
             background-color: black; /* Cor da barra de separação */
         }
+
+        .white-scroll {
+            height: 100vh; /* Altura do scroll branco */
+            background-color: white; /* Cor de fundo branca */
+        }
     </style>
 </head>
 
@@ -211,6 +216,10 @@
             if (record.image) {
                 var image = new Image();
                 image.src = record.image;
+                if (record.id === 'Rwanda-chapter') {
+                    image.classList.add('full-screen-image');
+                    image.classList.add('scroll-padding'); // Adicione a classe 'scroll-padding' para controlar o padding do scroll
+                }
                 chapter.appendChild(image);
             }
 
@@ -316,7 +325,7 @@
                     response.element.classList.add('active');
 
                     // Verifica se o capítulo é 'Geneva-chapter' ou 'Namibia-chapter' e aplica o Style (Mapa) específico
-                    if (chapter.id === 'Geneva-chapter' || chapter.id === 'Namibia-chapter') {
+                    if (chapter.id === 'Geneva-chapter' || chapter.id === 'Namibia-chapter' || chapter.id === 'Rwanda-chapter' || chapter.id === 'DC-chapter') {
                         map.setStyle(chapter.style);
                     } else {
                         map.setStyle('mapbox://styles/tugaworldtravel/cm5wq05a8004501shbxlwclp6'); // Estilo padrão para outros capítulos
@@ -348,7 +357,7 @@
                 if (record.id === 'world-chapter') {
                     chapterElement.style.paddingBottom = '125vh'; // Diminuir o scroll do "World-chapter"
                 } else if (record.id === 'Namibia-chapter') {
-                    chapterElement.style.paddingBottom = '100vh'; // Triplicar o tempo de scroll do "Namibia-chapter"
+                    chapterElement.style.paddingBottom = '10vh'; // Triplicar o tempo de scroll do "Namibia-chapter"
                 } else {
                     chapterElement.style.paddingBottom = '125vh'; // Aumentar o tempo de scroll dos outros capítulos
                 }
@@ -396,10 +405,58 @@
             separatorAfter.classList.add('separator'); // Adicione a classe 'separator' para a barra preta
             newElementContainer.parentNode.insertBefore(separatorAfter, newElementContainer.nextSibling);
 
-            // Inserir o "Tokyo-chapter" após a imagem "SOS_14.JPG"
-            var tokyoChapter = document.getElementById('Tokyo-chapter');
-            newElementContainer.parentNode.insertBefore(tokyoChapter, newElementContainer.nextSibling);
+// Inserir um novo elemento após o "Tokyo-chapter"
+var rwandaChapter = document.createElement('div');
+            rwandaChapter.setAttribute('id', 'Rwanda-chapter');
+            rwandaChapter.classList.add('scroll-padding'); // Adicione a classe 'scroll-padding' para controlar o padding do scroll
+            rwandaChapter.classList.add('step'); // Adicione a classe 'step' para comportamento de scroll
+            var rwandaImage = document.createElement('img');
+            rwandaImage.src = './assets/SOS_18.JPG'; // Adicione a imagem aqui
+            rwandaImage.classList.add('full-screen-image'); // Adicione a classe para definir o tamanho e estilo
+            rwandaChapter.appendChild(rwandaImage);
+            tokyoChapter.parentNode.insertBefore(rwandaChapter, tokyoChapter.nextSibling);
+            backgroundRwanda = document.createElement('img');
+            
         });
+
+        // Adicionar lógica para ocultar o mapa quando o "Rwanda-chapter" estiver ativo
+        var scroller = scrollama();
+
+        scroller
+            .setup({
+                step: '.step',
+                offset: 0,
+                debug: false
+            })
+            .onStepEnter(response => {
+                var element = response.element;
+                if (element.id === 'Rwanda-chapter') {
+                    document.getElementById('map').classList.add('none');
+                    document.querySelector('.cover').classList.add('show-image');
+                } else {
+                    document.getElementById('none').classList.remove('hide-map');
+                    document.querySelector('cover').classList.remove('show-image');
+                }
+            });
+
+    </script>
+    <script>
+        var scroller = scrollama();
+
+        scroller
+            .setup({
+                step: '.step',
+                offset: 0.5,
+                progress: true
+            })
+            .onStepEnter(response => {
+                var chapter = config.chapters.find(chap => chap.id === response.element.id);
+                response.element.classList.add('active');
+                map[chapter.mapAnimation || 'flyTo'](chapter.location);
+            })
+            .onStepExit(response => {
+                response.element.classList.remove('active');
+            });
 
     </script>
 

@@ -63,39 +63,25 @@ var config = {
         {
             id: 'Namibia-chapter',
             alignment: 'center',
-            title: '',
-            style: 'mapbox://styles/tugaworldtravel/cm5wfmwp600rx01s34i715irn',
-            image: '',
-            description: '',
+            title: 'Namibia',
+            image: './assets/SOS_6.JPG', // Adicione a imagem aqui
+            description: 'Descrição do capítulo da Namíbia.',
             location: {
-                center: [18.4904, -22.9576],
+                center: [15.3875, -23.2333],
                 zoom: 5,
                 pitch: 0,
                 bearing: 0
             },
             mapAnimation: 'flyTo',
-            onChapterEnter: [
-                () => {
-                    document.body.style.backgroundImage = "url('./assets/SOS_12.JPG')";
-                    document.body.style.backgroundSize = 'cover';
-                    document.body.style.backgroundPosition = 'center';
-                    document.body.style.backgroundAttachment = 'fixed';
-                    document.body.style.height = '100vh'; // Garantir que a imagem ocupa toda a tela
-                    document.body.style.width = '100vw'; // Garantir que a imagem ocupa toda a largura
-                    document.body.style.margin = '0'; // Remover margens
-                    document.getElementById('map').style.display = 'none';
-                }
-            ],
-            onChapterExit: [
-                () => {
-                    document.body.style.backgroundImage = "none";
-                    document.getElementById('map').style.display = 'block';
-                }
-            ]
+            rotateAnimation: false,
+            onChapterEnter: [],
+            onChapterExit: [],
+            hidden: false,
+            alignment: 'full'
         },
         {
             id: 'Geneva-chapter',
-            alignment: 'left',
+            alignment: 'center',
             title: 'Genebra',
             style: 'mapbox://styles/tugaworldtravel/cm5idrk8q001w01rzd6ts6zy1',
             image: './assets/geneva.jpg',
@@ -141,6 +127,26 @@ var config = {
             mapAnimation: 'flyTo',
             onChapterEnter: [],
             onChapterExit: []
+        },
+        {
+            id: 'Rwanda-chapter',
+            title: '',
+            style: 'mapbox://styles/tugaworldtravel/cm68c6y1e000q01qubihg3zv1',
+            image: './assets/SOS_18.JPG',
+            description: '',
+            backgroundImage: './assets/SOS_18.JPG',
+            location: {
+                center: [0, 0], // Dummy coordinates, not used
+                zoom: 0,       // Dummy zoom level, not used
+                pitch: 0,      // Dummy pitch, not used
+                bearing: 0     // Dummy bearing, not used
+            },
+            mapAnimation: 'flyTo',
+            rotateAnimation: false,
+            onChapterEnter: [],
+            onChapterExit: [],
+            hidden: false,
+            alignment: 'full'
         }
     ]
 };
