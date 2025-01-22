@@ -1,1 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+    <meta charset="utf-8" />
+    <title>Mapbox Storytelling</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+    <link rel="icon" type="image/x-icon"
+        href="https://raw.githubusercontent.com/mapbox/assembly/publisher-staging/src/svgs/mapbox.svg">
+    <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v3.8.0/mapbox-gl.js"></script>
+    <link href="https://api.tiles.mapbox.com/mapbox-gl-js/v3.8.0/mapbox-gl.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/mapbox-gl-globe-minimap@1.2.0/dist/bundle.js"></script>
+    <script src="https://unpkg.com/scrollama"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: sans-serif;
+            background-color: #ffffff;
+        }
+
+        a,
+        a:hover,
+        a:visited {
+            color: #0071bc;
+        }
+
+        #map {
+            top: 0;
+            height: 100vh;
+            width: 100vw;
+            position: fixed;
+        }
+
+        #footer {
+            width: 100%;
+            min-height: 5vh;
+            padding-top: 2vh;
+            padding-bottom: 2vh;
+            text-align: center;
+            line-height: 25px;
+            font-size: 13px;
+            position: relative;
+            z-index: 5;
+            background-color: #f1f1f1;
+        }
+
+        #features {
+            padding-top: 10vh;
+            padding-bottom: 10vh;
+        }
+
+        .hidden {
+            visibility: hidden;
+        }
+
+        .centered {
+            width: 50vw;
+            margin: 0 auto;
+        }
+
+        .lefty {
+            width: 33vw;
+            margin-left: 5vw;
+        }
+
+        .righty {
+            width: 33vw;
+            margin-left: 62vw;
+        }
+
+        .fully {
+            width: 100%;
+            margin: auto;
+        }
+
+        .step {
+            padding-bottom: 100vh; /* Aumentar o scroll dos capítulos */
+            opacity: 0.25;
+        }
+
+        .step.active {
+            opacity: 0.9;
+        }
+
+        .step img {
+            width: 100%;
+        }
+
+        @media (max-width: 750px) {
+            .centered,
+            .lefty,
+            .righty,
+            .fully {
+                width: 90vw;
+                margin: 0 auto;
+            }
+        }
+
+        /* Fix para navegadores móveis */
+        .mapboxgl-canvas-container.mapboxgl-touch-zoom-rotate.mapboxgl-touch-drag-pan,
+        .mapboxgl-canvas-container.mapboxgl-touch-zoom-rotate.mapboxgl-touch-drag-pan .mapboxgl-canvas {
+            touch-action: unset;
+        }
+
+        /* Classes para os capítulos específicos */
+        .background-portugal {
+            background-image: url('./assets/AVEIRO.jpeg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            height: 100vh;
+            width: 100vw;
+            margin: 0;
+        }
+
+        .background-namibia {
+            background-image: url('./assets/SOS_15.JPG');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            height: 100vh;
+            width: 100vw;
+            margin: 0;
+        }
+
+        .resize-image {
+            width: 200px; /* Defina o tamanho desejado aqui */
+            height: auto;
+        }
+
+        .cover-image {
+            width: 100vw; /* Full screen */
+            height: 100vh; /* Full screen */
+            object-fit: cover;
+            z-index: 1000; /* Trazer a imagem para a frente */
+            position: absolute; /* Fixar a imagem em relação à viewport */
+            top: 0; /* Ajuste a posição conforme necessário */
+            left: 0; /* Ajuste a posição conforme necessário */
+            display: none; /* Inicialmente oculta */
+            transform: /* Reduzir o tamanho da imagem em 10% */
+        }
+
+        .scroll-container {
+            padding-bottom: 1200vh; /* Dobrar o valor para configurar o tempo/tamanho do scroll */
+        }
+
+        .separator {
+            height: 5vh; /* Ajuste a altura da separação para algo mais fino */
+            background-color: black; /* Cor da barra de separação */
+        }
+    </style>
+</head>
+
+<body>
+    <div id="map"></div>
+    <div id="story"></div>
+    <img id="highlight-image" src="./assets/SOS_3.jpg" class="cover-image" /> <!-- Adicione a imagem aqui -->
+
+    <script src="./config.MAPS2024.js"></script>
+    <script>
+        var initLoad = true;
+        var layerTypes = {
+            'fill': ['fill-opacity'],
+            'line': ['line-opacity'],
+            'circle': ['circle-opacity', 'circle-stroke-opacity'],
+            'symbol': ['icon-opacity', 'text-opacity'],
+            'raster': ['raster-opacity'],
+            'fill-extrusion': ['fill-extrusion-opacity'],
+            'heatmap': ['heatmap-opacity']
+        }
+
+        var alignments = {
+            'left': 'lefty',
+            'center': 'centered',
+            'right': 'righty',
+            'full': 'fully'
+        }
+
+        function getLayerPaintType(layer) {
+            var layerType = map.getLayer(layer).type;
+            return layerTypes[layerType];
+        }
+
+        function setLayerOpacity(layer) {
+            var paintProps = getLayerPaintType(layer.layer);
+            paintProps.forEach(function (prop) {
+                var options = {};
+                if (layer.duration) {
+                    var transitionProp = prop + "-transition";
+                    options = { "duration": layer.duration };
+                    map.setPaintProperty(layer.layer, transitionProp, options);
+                }
+                map.setPaintProperty(layer.layer, prop, layer.opacity, options);
+            });
+        }
+
+        var story = document.getElementById('story');
+        var features = document.createElement('div');
+        features.setAttribute('id', 'features');
+
+        config.chapters.forEach((record, idx) => {
+            var container = document.createElement('div');
+            var chapter = document.createElement('div');
+
+            if (record.title) {
+                var title = document.createElement('h3');
+                title.innerText = record.title;
+                chapter.appendChild(title);
+            }
+
+            if (record.image) {
+                var image = new Image();
+                image.src = record.image;
+                chapter.appendChild(image);
+            }
+
+            if (record.description) {
+                var story = document.createElement('p');
+                story.innerHTML = record.description;
+                chapter.appendChild(story);
+            }
+
+            container.setAttribute('id', record.id);
+            container.classList.add('step');
+            if (idx === 0) {
+                container.classList.add('active');
+            }
+
+            chapter.classList.add(config.theme);
+            container.appendChild(chapter);
+            container.classList.add(alignments[record.alignment] || 'centered');
+            if (record.hidden) {
+                container.classList.add('hidden');
+            }
+            features.appendChild(container);
+        });
+
+        story.appendChild(features);
+
+        var footer = document.createElement('div');
+
+        if (config.footer) {
+            var footerText = document.createElement('p');
+            footerText.innerHTML = config.footer;
+            footer.appendChild(footerText);
+        }
+
+        if (footer.innerText.length > 0) {
+            footer.classList.add(config.theme);
+            footer.setAttribute('id', 'footer');
+            story.appendChild(footer);
+        }
+
+        mapboxgl.accessToken = config.accessToken;
+
+        var map = new mapboxgl.Map({
+            container: 'map',
+            style: 'mapbox://styles/mapbox/streets-v11', // Adicione o estilo do mapa
+            center: config.chapters[0].location.center,
+            zoom: config.chapters[0].location.zoom,
+            bearing: config.chapters[0].location.bearing,
+            pitch: config.chapters[0].location.pitch,
+            interactive: false,
+            projection: 'globe' // Adicione a projeção do mapa
+        });
+
+        // Create a inset map if enabled in config.js
+        if (config.inset) {
+            map.addControl(
+                new GlobeMinimap({ ...config.insetOptions }),
+                config.insetPosition
+            );
+        }
+
+        if (config.showMarkers) {
+            var marker = new mapboxgl.Marker({ color: config.markerColor });
+            marker.setLngLat(config.chapters[0].location.center).addTo(map);
+        }
+
+        // instantiate the scrollama
+        var scroller = scrollama();
+
+        map.on("load", function () {
+            if (config.use3dTerrain) {
+                map.addSource('mapbox-dem', {
+                    'type': 'raster-dem',
+                    'url': 'mapbox://mapbox.mapbox-terrain-dem-v1',
+                    'tileSize': 512,
+                    'maxzoom': 14
+                });
+                map.setTerrain({ 'source': 'mapbox-dem', 'exaggeration': 1.5 });
+                map.addLayer({
+                    'id': 'sky',
+                    'type': 'sky',
+                    'paint': {
+                        'sky-type': 'atmosphere',
+                        'sky-atmosphere-sun': [0.0, 0.0],
+                        'sky-atmosphere-sun-intensity': 15
+                    }
+                });
+            };
+
+            scroller
+                .setup({
+                    step: '.step',
+                    offset: 0.5,
+                    progress: true
+                })
+                .onStepEnter(async response => {
+                    var current_chapter = config.chapters.findIndex(chap => chap.id === response.element.id);
+                    var chapter = config.chapters[current_chapter];
+
+                    response.element.classList.add('active');
+
+                    // Verifica se o capítulo é 'DC-chapter' e aplica o Style (Mapa) específico
+                    if (chapter.id === 'DC-chapter' || chapter.id === 'Geneva-chapter') {
+                        map.setStyle(chapter.style);
+                    } else {
+                        map.setStyle('mapbox://styles/tugaworldtravel/cm5wq05a8004501shbxlwclp6'); // Estilo padrão para outros capítulos
+                    }
+
+                    if (config.showMarkers && (chapter.id === 'DC-chapter' || chapter.id === 'Geneva-chapter' || chapter.id === 'Argentina-chapter' || chapter.id === 'Tokyo-chapter')) {
+                        marker.setLngLat(chapter.location.center).addTo(map);
+                    } else {
+                        marker.remove();
+                    }
+
+                    // Verifica se o capítulo é 'DC-chapter', remova o mapa
+                    if (chapter.id === 'DC-chapter') {
+                        document.getElementById('map').style.display = 'none';  // Ocultar o mapa
+                    }
+
+                    // Se o capítulo for diferente, mostrar o mapa novamente
+                    if (chapter.id !== 'DC-chapter') {
+                        document.getElementById('map').style.display = 'block';  // Mostrar o mapa
+                    }
+
+                    // Mostrar a imagem antes do "DC-chapter"
+                    var highlightImage = document.getElementById('highlight-image');
+                    if (chapter.id === 'DC-chapter') {
+                        highlightImage.style.display = 'none';
+                    } else if (chapter.id === 'world-chapter') {
+                        highlightImage.style.display = 'block';
+                    } else {
+                        highlightImage.style.display = 'none';
+                    }
+
+                    map[chapter.mapAnimation || 'flyTo'](chapter.location);
+                })
+                .onStepExit(response => {
+                    response.element.classList.remove('active');
+                });
+
+            // Ajustar dinamicamente o padding-bottom dos capítulos até o "DC-chapter"
+            config.chapters.forEach((record, idx) => {
+                var chapterElement = document.getElementById(record.id);
+                if (record.id === 'world-chapter') {
+                    chapterElement.style.paddingBottom = '125vh'; // Diminuir o scroll do "World-chapter"
+                } else if (record.id !== 'DC-chapter') {
+                    chapterElement.style.paddingBottom = '125vh'; // Aumentar o tempo de scroll dos capítulos
+                } else {
+                    return false; // Parar o loop ao encontrar o "DC-chapter"
+                }
+            });
+
+            // Inserir um novo elemento após o "World-chapter"
+            var worldChapter = document.getElementById('world-chapter');
+            var newElementContainer = document.createElement('div');
+            newElementContainer.classList.add('scroll-container'); // Adicione a classe 'scroll-container' para comportamento de scroll
+            newElementContainer.style.paddingBottom = '125vh'; // Dobrar o valor para configurar o tempo/tamanho do scroll
+            var newElement = document.createElement('img');
+            newElement.src = './assets/SOS_3.jpg';
+            newElement.classList.add('cover-image'); // Adicione a classe para definir o tamanho e estilo
+            newElement.style.opacity = '1'; // Máxima opacidade
+            newElementContainer.appendChild(newElement);
+            worldChapter.parentNode.insertBefore(newElementContainer, worldChapter.nextSibling);
+
+            // Adicionar separação entre capítulos e a fotografia
+            var separatorBefore = document.createElement('div');
+            separatorBefore.classList.add('separator'); // Adicione a classe 'separator' para a barra preta
+            worldChapter.parentNode.insertBefore(separatorBefore, newElementContainer);
+
+            var separatorAfter = document.createElement('div');
+            separatorAfter.classList.add('separator'); // Adicione a classe 'separator' para a barra preta
+            newElementContainer.parentNode.insertBefore(separatorAfter, newElementContainer.nextSibling);
+
+            // Inserir um novo elemento após o "Argentina-chapter"
+            var argentinaChapter = document.getElementById('Argentina-chapter');
+            var newElementContainer = document.createElement('div');
+            newElementContainer.classList.add('scroll-container'); // Adicione a classe 'scroll-container' para comportamento de scroll
+            newElementContainer.style.paddingBottom = '125vh'; // Configurar o tempo/tamanho do scroll
+            var newElement = document.createElement('img');
+            newElement.src = './assets/SOS_3.jpg';
+            newElement.classList.add('cover-image'); // Adicione a classe para definir o tamanho e estilo
+            newElement.style.opacity = '1'; // Máxima opacidade
+            newElementContainer.appendChild(newElement);
+            argentinaChapter.parentNode.insertBefore(newElementContainer, argentinaChapter.nextSibling);
+
+            // Adicionar separação entre capítulos e a fotografia
+            var separatorBefore = document.createElement('div');
+            separatorBefore.classList.add('separator'); // Adicione a classe 'separator' para a barra preta
+            argentinaChapter.parentNode.insertBefore(separatorBefore, newElementContainer);
+
+            var separatorAfter = document.createElement('div');
+            separatorAfter.classList.add('separator'); // Adicione a classe 'separator' para a barra preta
+            newElementContainer.parentNode.insertBefore(separatorAfter, newElementContainer.nextSibling);
+        });
+
+    </script>
+
+</body>
+
+</html>
