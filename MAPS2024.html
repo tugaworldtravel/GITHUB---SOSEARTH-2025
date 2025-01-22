@@ -312,34 +312,22 @@
 
                     response.element.classList.add('active');
 
-                    // Verifica se o capítulo é 'DC-chapter' e aplica o Style (Mapa) específico
-                    if (chapter.id === 'DC-chapter' || chapter.id === 'Geneva-chapter') {
+                    // Verifica se o capítulo é 'Geneva-chapter' ou 'Namibia-chapter' e aplica o Style (Mapa) específico
+                    if (chapter.id === 'Geneva-chapter' || chapter.id === 'Namibia-chapter') {
                         map.setStyle(chapter.style);
                     } else {
                         map.setStyle('mapbox://styles/tugaworldtravel/cm5wq05a8004501shbxlwclp6'); // Estilo padrão para outros capítulos
                     }
 
-                    if (config.showMarkers && (chapter.id === 'DC-chapter' || chapter.id === 'Geneva-chapter' || chapter.id === 'Argentina-chapter' || chapter.id === 'Tokyo-chapter')) {
+                    if (config.showMarkers && (chapter.id === 'Geneva-chapter' || chapter.id === 'Argentina-chapter' || chapter.id === 'Tokyo-chapter')) {
                         marker.setLngLat(chapter.location.center).addTo(map);
                     } else {
                         marker.remove();
                     }
 
-                    // Verifica se o capítulo é 'DC-chapter', remova o mapa
-                    if (chapter.id === 'DC-chapter') {
-                        document.getElementById('map').style.display = 'none';  // Ocultar o mapa
-                    }
-
-                    // Se o capítulo for diferente, mostrar o mapa novamente
-                    if (chapter.id !== 'DC-chapter') {
-                        document.getElementById('map').style.display = 'block';  // Mostrar o mapa
-                    }
-
-                    // Mostrar a imagem antes do "DC-chapter"
+                    // Mostrar a imagem antes do "world-chapter"
                     var highlightImage = document.getElementById('highlight-image');
-                    if (chapter.id === 'DC-chapter') {
-                        highlightImage.style.display = 'none';
-                    } else if (chapter.id === 'world-chapter') {
+                    if (chapter.id === 'world-chapter') {
                         highlightImage.style.display = 'block';
                     } else {
                         highlightImage.style.display = 'none';
@@ -351,15 +339,15 @@
                     response.element.classList.remove('active');
                 });
 
-            // Ajustar dinamicamente o padding-bottom dos capítulos até o "DC-chapter"
+            // Ajustar dinamicamente o padding-bottom dos capítulos
             config.chapters.forEach((record, idx) => {
                 var chapterElement = document.getElementById(record.id);
                 if (record.id === 'world-chapter') {
                     chapterElement.style.paddingBottom = '125vh'; // Diminuir o scroll do "World-chapter"
-                } else if (record.id !== 'DC-chapter') {
-                    chapterElement.style.paddingBottom = '125vh'; // Aumentar o tempo de scroll dos capítulos
+                } else if (record.id === 'Namibia-chapter') {
+                    chapterElement.style.paddingBottom = '100vh'; // Triplicar o tempo de scroll do "Namibia-chapter"
                 } else {
-                    return false; // Parar o loop ao encontrar o "DC-chapter"
+                    chapterElement.style.paddingBottom = '125vh'; // Aumentar o tempo de scroll dos outros capítulos
                 }
             });
 

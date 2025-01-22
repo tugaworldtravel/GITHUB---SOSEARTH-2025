@@ -30,7 +30,7 @@ var config = {
             id: 'Portugal-chapter',
             alignment: 'left',
             title: '',
-            image: '',
+            image: './assets/SOS_4.JPG',
             description: '',
             location: {
                 center: [-8.3675, 40.7333],
@@ -39,24 +39,8 @@ var config = {
                 bearing: 0
             },
             mapAnimation: 'flyTo',
-            onChapterEnter: [
-                () => {
-                    document.body.style.backgroundImage = "url('./assets/SOS_5.JPG')";
-                    document.body.style.backgroundSize = 'cover';
-                    document.body.style.backgroundPosition = 'center';
-                    document.body.style.backgroundAttachment = 'fixed';
-                    document.body.style.height = '100vh'; // Garantir que a imagem ocupa toda a tela
-                    document.body.style.width = '100vw'; // Garantir que a imagem ocupa toda a largura
-                    document.body.style.margin = '0'; // Remover margens
-                    document.getElementById('map').style.display = 'none';
-                }
-            ],
-            onChapterExit: [
-                () => {
-                    document.body.style.backgroundImage = "none";
-                    document.getElementById('map').style.display = 'block';
-                }
-            ]
+            onChapterEnter: [],
+            onChapterExit: []
         },
         {
             id: 'DC-chapter',
@@ -80,6 +64,7 @@ var config = {
             id: 'Namibia-chapter',
             alignment: 'center',
             title: '',
+            style: 'mapbox://styles/tugaworldtravel/cm5wfmwp600rx01s34i715irn',
             image: '',
             description: '',
             location: {
