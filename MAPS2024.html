@@ -115,7 +115,7 @@
         }
 
         .background-namibia {
-            background-image: url('./assets/SOS_15.JPG');
+            background-image: url('./assets/SOS_4.JPG');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -134,15 +134,14 @@
             height: 100vh; /* Full screen */
             object-fit: cover;
             z-index: 1000; /* Trazer a imagem para a frente */
-            position: absolute; /* Fixar a imagem em relação à viewport */
+            position: relative; /* Fixar a imagem em relação à viewport */
             top: 0; /* Ajuste a posição conforme necessário */
             left: 0; /* Ajuste a posição conforme necessário */
-            display: none; /* Inicialmente oculta */
-            transform: /* Reduzir o tamanho da imagem em 10% */
+            display: block; /* Inicialmente visível */
         }
 
         .scroll-container {
-            padding-bottom: 1200vh; /* Dobrar o valor para configurar o tempo/tamanho do scroll */
+            padding-bottom: 125vh; /* Configurar o tempo/tamanho do scroll */
         }
 
         .separator {
@@ -155,7 +154,7 @@
 <body>
     <div id="map"></div>
     <div id="story"></div>
-    <img id="highlight-image" src="./assets/SOS_3.jpg" class="cover-image" /> <!-- Adicione a imagem aqui -->
+    <img id="highlight-image" src="./assets/SOS_1.JPG" class="cover-image" /> <!-- Imagem inicial -->
 
     <script src="./config.MAPS2024.js"></script>
     <script>
@@ -370,7 +369,7 @@
             newElementContainer.classList.add('scroll-container'); // Adicione a classe 'scroll-container' para comportamento de scroll
             newElementContainer.style.paddingBottom = '125vh'; // Dobrar o valor para configurar o tempo/tamanho do scroll
             var newElement = document.createElement('img');
-            newElement.src = './assets/SOS_3.jpg';
+            newElement.src = './assets/SOS_1.JPG'; // Adicione a imagem aqui
             newElement.classList.add('cover-image'); // Adicione a classe para definir o tamanho e estilo
             newElement.style.opacity = '1'; // Máxima opacidade
             newElementContainer.appendChild(newElement);
@@ -391,7 +390,7 @@
             newElementContainer.classList.add('scroll-container'); // Adicione a classe 'scroll-container' para comportamento de scroll
             newElementContainer.style.paddingBottom = '125vh'; // Configurar o tempo/tamanho do scroll
             var newElement = document.createElement('img');
-            newElement.src = './assets/SOS_3.jpg';
+            newElement.src = './assets/SOS_14.JPG'; // Adicione a imagem aqui
             newElement.classList.add('cover-image'); // Adicione a classe para definir o tamanho e estilo
             newElement.style.opacity = '1'; // Máxima opacidade
             newElementContainer.appendChild(newElement);

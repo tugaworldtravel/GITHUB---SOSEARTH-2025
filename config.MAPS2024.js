@@ -41,7 +41,7 @@ var config = {
             mapAnimation: 'flyTo',
             onChapterEnter: [
                 () => {
-                    document.body.style.backgroundImage = "url('./assets/SOS_14.jpg')";
+                    document.body.style.backgroundImage = "url('./assets/SOS_5.JPG')";
                     document.body.style.backgroundSize = 'cover';
                     document.body.style.backgroundPosition = 'center';
                     document.body.style.backgroundAttachment = 'fixed';
@@ -91,7 +91,7 @@ var config = {
             mapAnimation: 'flyTo',
             onChapterEnter: [
                 () => {
-                    document.body.style.backgroundImage = "url('./assets/SOS_15.jgp')";
+                    document.body.style.backgroundImage = "url('./assets/SOS_12.JPG')";
                     document.body.style.backgroundSize = 'cover';
                     document.body.style.backgroundPosition = 'center';
                     document.body.style.backgroundAttachment = 'fixed';
@@ -145,7 +145,7 @@ var config = {
             id: 'Tokyo-chapter',
             alignment: 'center',
             title: 'Tóquio',
-            image: './assets/tokyo.jpg',
+            image: './assets/SOS_6.JPG',
             description: 'Tóquio, a capital do Japão, é conhecida pelos seus arranha-céus e cultura pop.',
             location: {
                 center: [139.6917, 35.6895],
