@@ -237,6 +237,8 @@
 
         story.appendChild(features);
 
+        // Remover o código relacionado ao footer
+        /*
         var footer = document.createElement('div');
 
         if (config.footer) {
@@ -250,6 +252,7 @@
             footer.setAttribute('id', 'footer');
             story.appendChild(footer);
         }
+        */
 
         mapboxgl.accessToken = config.accessToken;
 
@@ -392,6 +395,10 @@
             var separatorAfter = document.createElement('div');
             separatorAfter.classList.add('separator'); // Adicione a classe 'separator' para a barra preta
             newElementContainer.parentNode.insertBefore(separatorAfter, newElementContainer.nextSibling);
+
+            // Inserir o "Tokyo-chapter" após a imagem "SOS_14.JPG"
+            var tokyoChapter = document.getElementById('Tokyo-chapter');
+            newElementContainer.parentNode.insertBefore(tokyoChapter, newElementContainer.nextSibling);
         });
 
     </script>
