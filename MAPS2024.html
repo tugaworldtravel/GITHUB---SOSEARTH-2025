@@ -151,7 +151,7 @@
 
         .white-scroll {
             height: 100vh; /* Altura do scroll branco */
-            background-color: white; /* Cor de fundo branca */
+            background-color: transparent; /* Cor de fundo branca */
         
 
         /* Classes específicas para controlar o padding de cada capítulo */
@@ -164,7 +164,7 @@
         }
 
         .padding-rwanda-chapter {
-            padding-bottom: 66vh;
+            padding-bottom: 5vh; /* Ajuste o valor conforme necessário */
         }
 
         .padding-argentina-chapter {
@@ -189,6 +189,20 @@
 
         .padding-sos18 {
             padding-bottom: 500vh;
+        }
+
+        .full-screen-image {
+            width: 100vw;
+            height: 100vh;
+            object-fit: cover;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: -1; /* Para garantir que a imagem fique atrás do conteúdo */
+        }
+
+        .none {
+            display: none;
         }
     </style>
 </head>
@@ -394,7 +408,9 @@
                 if (record.id === 'world-chapter') {
                     chapterElement.style.paddingBottom = '125vh'; // Diminuir o scroll do "World-chapter"
                 } else if (record.id === 'Namibia-chapter') {
-                    chapterElement.style.paddingBottom = '10vh'; // Triplicar o tempo de scroll do "Namibia-chapter"
+                    chapterElement.style.paddingBottom = '90vh'; // Dobrar o tempo de scroll do "Namibia-chapter"
+                } else if (record.id === 'Rwanda-chapter') {
+                    chapterElement.style.paddingBottom = '0.005vh'; // Ajustar o tempo de scroll do "Rwanda-chapter"
                 } else {
                     chapterElement.style.paddingBottom = '125vh'; // Aumentar o tempo de scroll dos outros capítulos
                 }
