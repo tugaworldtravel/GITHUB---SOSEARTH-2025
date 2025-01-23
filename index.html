@@ -26,22 +26,30 @@
             color: white;
         }
 
-        /* Navegação no canto superior direito */
+        /* Navegação no cabeçalho */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.7); /* Fundo semi-transparente */
+            color: white;
+            z-index: 1000;
+        }
+
         nav {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            font-size: 18px;
+            display: flex;
+            justify-content: flex-end;
+            padding: 10px 20px;
         }
 
         nav ul {
             list-style-type: none;
             margin: 0;
             padding: 0;
+            display: flex;
         }
 
         nav ul li {
-            display: inline;
             margin: 0 10px;
         }
 
@@ -61,89 +69,81 @@
         }
 
         .home-text h1 {
-            font-size: 8em;
-            margin-bottom: 20px;
+            font-size: 15em;
+            margin-bottom: 0.1px;
+            font-family: 'Ave'; /* Adicione esta linha para mudar o tipo de letra */
+            color: #ffffff; /* Muda a cor do texto para vermelho */
+            font-weight: lighter; /* Muda a espessura das letras para negrito */
+            opacity: 0.5; /* Adiciona transparência ao texto */
         }
 
         .home-text p {
             font-size: 1.5em;
+            margin-bottom: 5px;
+            font-family: 'Ave'; /* Adicione esta linha para mudar o tipo de letra */
+            color: #ffffff; /* Muda a cor do texto para verde */
+            font-weight: lighter; /* Muda a espessura das letras para normal */
+            opacity: 0.5; /* Adiciona transparência ao texto */
         }
 
         .autor {
             font-size: 1em;
+            margin-bottom: 20px;
+            font-family: 'Ave'; /* Adicione esta linha para mudar o tipo de letra */
+            color: #ffffff; /* Muda a cor do texto para azul */
+            font-weight: lighter; /* Muda a espessura das letras para mais leve */
+            opacity: 0.5; /* Adiciona transparência ao texto */
         }
 
         /* Estilo para a segunda imagem (SOS_14.jpeg) */
         .second-image-container {
-            background-image: url('assets/SOS_14.JPG'); /* Caminho da imagem SOS_14 */
-            background-size: cover;
-            background-position: center;
-            height: 100vh;  /* A imagem ocupa toda a tela na segunda seção */
+            height: 100vh;  /* A galeria ocupa toda a tela na segunda seção */
             display: flex;
-            justify-content: center;
             align-items: center;
             color: white;
+            overflow-x: auto; /* Permite rolagem horizontal */
+            white-space: nowrap; /* Impede quebra de linha para as imagens */
+            position: relative;
+            background-color: rgb(255, 255, 255); /* Remove o fundo branco */
+            margin: 10; /* Remove qualquer margem padrão */
+            padding: 0; /* Remove qualquer padding padrão */
         }
 
-        /* Estilo para o texto na segunda seção */
-        .second-text {
-            text-align: center;
+        /* Estilo para a galeria de imagens */
+        .gallery-image {
+            display: inline-block;
+            width: calc(150vw - 0px); /* Cada imagem ocupa a largura total da viewport menos a borda */
+            height:75vh; /* Cada imagem ocupa a altura total da viewport */
+            object-fit: contain; /* Garante que a imagem não seja cortada */
+            border: 0.5px solid white; /* Adiciona uma borda branca fina */
+            margin: 0; /* Remove qualquer margem padrão */
+        }
+
+        /* Estilo para as setas de navegação */
+        .nav-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
             font-size: 2em;
             color: white;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 10px;
+            cursor: pointer;
+            z-index: 1001;
         }
 
-        /* Estilo para a separação de capítulos */
-        .section-separator {
-            width: 100%;
-            height: 10px;
-            background-color: black;
+        .nav-arrow.left {
+            left: 10px;
         }
 
-        /* Ocultar o conteúdo da página até que a senha seja verificada */
-        .hidden-content {
-            display: none;
+        .nav-arrow.right {
+            right: 10px;
         }
     </style>
-    <script>
-        // Função para verificar a senha
-        function checkPassword() {
-            var password = prompt("PASSWORD:");
-            if (password === "EARTH2025") {
-                document.querySelector('.hidden-content').style.display = 'block';
-            } else {
-                alert("Senha incorreta. Acesso negado.");
-                window.location.href = "https://www.google.com"; // Redirecionar para outra página
-            }
-        }
-    </script>
 </head>
-<body onload="checkPassword()">
-    <!-- Conteúdo da página que será ocultado até que a senha seja verificada -->
-    <div class="hidden-content">
-        <!-- Primeira seção com a imagem "AVEIRO.jpeg" -->
-        <div class="home-container">
-            <div class="home-text">
-                <h1>SOS EARTH</h1>
-                <p>Plataforma para ajudar na documentação e mapeamento dos eventos climáticos globais.</p>
-                <div class="autor">by Daniel Rodrigues</div>
-                <div class="autor">2025</div>
-            </div>
-        </div>
-
-        <!-- Separação entre capítulos -->
-        <div class="section-separator"></div>
-
-        <!-- Segunda seção com a imagem "SOS_14.jpeg" -->
-        <div class="second-image-container">
-            <div class="second-text">
-                <h2>Juntos podemos combater as alterações climáticas</h2>
-                <p>É preciso agir agora para preservar o nosso planeta para as futuras gerações.</p>
-            </div>
-        </div>
-
-        <!-- Separação entre capítulos -->
-        <div class="section-separator"></div>
-
+<body>
+    <!-- Cabeçalho com navegação -->
+    <header>
         <!-- Navegação no canto superior direito -->
         <nav>
             <ul>
@@ -154,6 +154,56 @@
                 <!-- Outros links podem ser adicionados aqui -->
             </ul>
         </nav>
+    </header>
+
+    <!-- Primeira seção com a imagem "AVEIRO.jpeg" -->
+    <div class="home-container">
+        <div class="home-text">
+            <h1>SOS EARTH</h1>
+            <p>Plataforma de documentação e mapeamento dos eventos climáticos globais.</p>
+            <div class="autor"></div>
+            <div class="autor"></div>
+        </div>
     </div>
+
+    <!-- Segunda seção com a galeria de imagens -->
+    <div class="second-image-container">
+        <!-- Setas de navegação -->
+        <div class="nav-arrow left" onclick="scrollGallery(-1)">&#10094;</div>
+        <div class="nav-arrow right" onclick="scrollGallery(1)">&#10095;</div>
+
+        <!-- Galeria de imagens -->
+        <img src="assets/SOS_1.JPG" class="gallery-image" alt="Imagem 1">
+        <img src="assets/SOS_2.JPG" class="gallery-image" alt="Imagem 2">
+        <img src="assets/SOS_3.JPG" class="gallery-image" alt="Imagem 3">
+        <img src="assets/SOS_4.JPG" class="gallery-image" alt="Imagem 4">
+        <img src="assets/SOS_5.JPG" class="gallery-image" alt="Imagem 5">
+        <img src="assets/SOS_6.JPG" class="gallery-image" alt="Imagem 6">
+        <img src="assets/SOS_7.JPG" class="gallery-image" alt="Imagem 7">
+        <img src="assets/SOS_8.JPG" class="gallery-image" alt="Imagem 8">
+        <img src="assets/SOS_9.JPG" class="gallery-image" alt="Imagem 9">
+        <img src="assets/SOS_10.JPG" class="gallery-image" alt="Imagem 10">
+        <img src="assets/SOS_11.JPG" class="gallery-image" alt="Imagem 11">
+        <img src="assets/SOS_12.JPG" class="gallery-image" alt="Imagem 12">
+        <img src="assets/SOS_13.JPG" class="gallery-image" alt="Imagem 13">
+        <img src="assets/SOS_14.JPG" class="gallery-image" alt="Imagem 14">
+        <img src="assets/SOS_15.JPG" class="gallery-image" alt="Imagem 15">
+        <img src="assets/SOS_16.JPG" class="gallery-image" alt="Imagem 16">
+        <img src="assets/SOS_17.JPG" class="gallery-image" alt="Imagem 17">
+        <img src="assets/SOS_18.JPG" class="gallery-image" alt="Imagem 18">
+        <img src="assets/SOS_19.JPG" class="gallery-image" alt="Imagem 19">
+        <img src="assets/SOS_20.JPG" class="gallery-image" alt="Imagem 20">
+    </div>
+
+    <script>
+        function scrollGallery(direction) {
+            const container = document.querySelector('.second-image-container');
+            const scrollAmount = container.clientWidth;
+            container.scrollBy({
+                left: direction * scrollAmount,
+                behavior: 'smooth'
+            });
+        }
+    </script>
 </body>
 </html>
