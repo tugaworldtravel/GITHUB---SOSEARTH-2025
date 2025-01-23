@@ -2,9 +2,10 @@ var config = {
     accessToken: 'pk.eyJ1IjoidHVnYXdvcmxkdHJhdmVsIiwiYSI6ImNtNXZkMzEwMzAwbGUyanF6dXVtOHQ5anoifQ.9VMIO6xw7aUD_uSileHqSw',
     showMarkers: true,
     markerColor: '#3FB1CE',
-    inset: true,
+    inset: false,
     insetOptions: {
-        markerColor: 'orange'
+        markerColor: 'black', // Defina a cor do marcador para preto
+        globeColor: '#FF0000' // Defina a cor do globo
     },
     insetPosition: 'bottom-right',
     theme: 'dark',
