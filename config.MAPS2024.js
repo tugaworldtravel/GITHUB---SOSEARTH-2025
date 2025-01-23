@@ -63,9 +63,9 @@ var config = {
         {
             id: 'Namibia-chapter',
             alignment: 'center',
-            title: 'Namibia',
+            title: '',
             image: './assets/SOS_6.JPG', // Adicione a imagem aqui
-            description: 'Descrição do capítulo da Namíbia.',
+            description: '',
             location: {
                 center: [15.3875, -23.2333],
                 zoom: 5,
@@ -130,16 +130,16 @@ var config = {
         },
         {
             id: 'Rwanda-chapter',
+            alignment: 'center',
             title: '',
             style: 'mapbox://styles/tugaworldtravel/cm68c6y1e000q01qubihg3zv1',
-            image: './assets/SOS_18.JPG',
+            image: './assets/SOS_4.JPG', // Adicione a imagem aqui
             description: '',
-            backgroundImage: './assets/SOS_18.JPG',
             location: {
-                center: [0, 0], // Dummy coordinates, not used
-                zoom: 0,       // Dummy zoom level, not used
-                pitch: 0,      // Dummy pitch, not used
-                bearing: 0     // Dummy bearing, not used
+                center: [0,0],
+                zoom: 0,
+                pitch: 0,
+                bearing: 0
             },
             mapAnimation: 'flyTo',
             rotateAnimation: false,
