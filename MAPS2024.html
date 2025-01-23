@@ -16,7 +16,8 @@
             margin: 0;
             padding: 0;
             font-family: sans-serif;
-            background-color: #ffffff;
+            background-color: transparent; /* Define o fundo da página como preto */
+            color: white; /* Define a cor do texto como branco para melhor contraste */
         }
 
         a,
@@ -147,7 +148,7 @@
 
         .white-scroll {
             height: 100vh; /* Altura do scroll branco */
-            background-color: transparent; /* Cor de fundo branca */
+            background-color: black; /* Cor de fundo branca */
         
 
         /* Classes específicas para controlar o padding de cada capítulo */
@@ -199,6 +200,10 @@
 
         .none {
             display: none;
+        }
+
+        .scroll-padding {
+            padding-bottom: 125vh; /* Configurar o tempo/tamanho do scroll */
         }
     </style>
 </head>
@@ -319,9 +324,18 @@
             zoom: config.chapters[0].location.zoom,
             bearing: config.chapters[0].location.bearing,
             pitch: config.chapters[0].location.pitch,
-            interactive: false,
-            projection: 'globe' // Adicione a projeção do mapa
+            interactive: false, // Desativa a interatividade do mapa
+            projection: 'globe', // Adicione a projeção do mapa
+            attributionControl: false // Desativa o controle de atribuição do Mapbox
         });
+
+        // Remover o controle de atribuição padrão, se necessário
+        map.on('load', function () {
+            map.removeControl(map._controls.find(control => control instanceof mapboxgl.AttributionControl));
+        });
+
+        // Adicionar outros controles, se necessário
+        map.addControl(new mapboxgl.NavigationControl());
 
         // Create a inset map if enabled in config.js
         if (config.inset) {
@@ -424,14 +438,6 @@
             newElementContainer.appendChild(newElement);
             worldChapter.parentNode.insertBefore(newElementContainer, worldChapter.nextSibling);
 
-            // Adicionar separação entre capítulos e a fotografia
-            var separatorBefore = document.createElement('div');
-            separatorBefore.classList.add('separator'); // Adicione a classe 'separator' para a barra preta
-            worldChapter.parentNode.insertBefore(separatorBefore, newElementContainer);
-
-            var separatorAfter = document.createElement('div');
-            separatorAfter.classList.add('separator'); // Adicione a classe 'separator' para a barra preta
-            newElementContainer.parentNode.insertBefore(separatorAfter, newElementContainer.nextSibling);
 
             // Inserir um novo elemento após o "Argentina-chapter"
             var argentinaChapter = document.getElementById('Argentina-chapter');
@@ -445,14 +451,6 @@
             newElementContainer.appendChild(newElement);
             argentinaChapter.parentNode.insertBefore(newElementContainer, argentinaChapter.nextSibling);
 
-            // Adicionar separação entre capítulos e a fotografia
-            var separatorBefore = document.createElement('div');
-            separatorBefore.classList.add('separator'); // Adicione a classe 'separator' para a barra preta
-            argentinaChapter.parentNode.insertBefore(separatorBefore, newElementContainer);
-
-            var separatorAfter = document.createElement('div');
-            separatorAfter.classList.add('separator'); // Adicione a classe 'separator' para a barra preta
-            newElementContainer.parentNode.insertBefore(separatorAfter, newElementContainer.nextSibling);
 
 // Inserir um novo elemento após o "Tokyo-chapter"
 var rwandaChapter = document.createElement('div');
@@ -507,6 +505,18 @@ var rwandaChapter = document.createElement('div');
                 response.element.classList.remove('active');
             });
 
+        // Adicionar lógica para ocultar o mapa quando o "Rwanda-chapter" estiver ativo
+        scroller
+            .onStepEnter(response => {
+                var element = response.element;
+                if (element.id === 'Rwanda-chapter') {
+                    document.getElementById('map').classList.add('none');
+                    document.querySelector('.cover').classList.add('show-image');
+                } else {
+                    document.getElementById('map').classList.remove('none');
+                    document.querySelector('.cover').classList.remove('show-image');
+                }
+            });
     </script>
 
 </body>

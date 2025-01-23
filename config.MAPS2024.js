@@ -31,7 +31,7 @@ var config = {
             id: 'Portugal-chapter',
             alignment: 'left',
             title: '',
-            image: './assets/SOS_4.JPG',
+            image: './assets/SOS_5.JPG',
             description: '',
             location: {
                 center: [-8.3675, 40.7333],
@@ -134,7 +134,7 @@ var config = {
             alignment: 'center',
             title: '',
             style: 'mapbox://styles/tugaworldtravel/cm68c6y1e000q01qubihg3zv1',
-            image: './assets/SOS_4.JPG', // Adicione a imagem aqui
+            image: './assets/SOS_5.JPG', // Adicione a imagem aqui
             description: '',
             location: {
                 center: [0,0],
