@@ -98,42 +98,62 @@
             height: 10px;
             background-color: black;
         }
+
+        /* Ocultar o conteúdo da página até que a senha seja verificada */
+        .hidden-content {
+            display: none;
+        }
     </style>
+    <script>
+        // Função para verificar a senha
+        function checkPassword() {
+            var password = prompt("PASSWORD:");
+            if (password === "EARTH2025") {
+                document.querySelector('.hidden-content').style.display = 'block';
+            } else {
+                alert("Senha incorreta. Acesso negado.");
+                window.location.href = "https://www.google.com"; // Redirecionar para outra página
+            }
+        }
+    </script>
 </head>
-<body>
-    <!-- Primeira seção com a imagem "AVEIRO.jpeg" -->
-    <div class="home-container">
-        <div class="home-text">
-            <h1>SOS EARTH</h1>
-            <p>Plataforma para ajudar na documentação e mapeamento dos eventos climáticos globais.</p>
-            <div class="autor">by Daniel Rodrigues</div>
-            <div class="autor">2025</div>
+<body onload="checkPassword()">
+    <!-- Conteúdo da página que será ocultado até que a senha seja verificada -->
+    <div class="hidden-content">
+        <!-- Primeira seção com a imagem "AVEIRO.jpeg" -->
+        <div class="home-container">
+            <div class="home-text">
+                <h1>SOS EARTH</h1>
+                <p>Plataforma para ajudar na documentação e mapeamento dos eventos climáticos globais.</p>
+                <div class="autor">by Daniel Rodrigues</div>
+                <div class="autor">2025</div>
+            </div>
         </div>
-    </div>
 
-    <!-- Separação entre capítulos -->
-    <div class="section-separator"></div>
+        <!-- Separação entre capítulos -->
+        <div class="section-separator"></div>
 
-    <!-- Segunda seção com a imagem "SOS_14.jpeg" -->
-    <div class="second-image-container">
-        <div class="second-text">
-            <h2>Juntos podemos combater as alterações climáticas</h2>
-            <p>É preciso agir agora para preservar o nosso planeta para as futuras gerações.</p>
+        <!-- Segunda seção com a imagem "SOS_14.jpeg" -->
+        <div class="second-image-container">
+            <div class="second-text">
+                <h2>Juntos podemos combater as alterações climáticas</h2>
+                <p>É preciso agir agora para preservar o nosso planeta para as futuras gerações.</p>
+            </div>
         </div>
+
+        <!-- Separação entre capítulos -->
+        <div class="section-separator"></div>
+
+        <!-- Navegação no canto superior direito -->
+        <nav>
+            <ul>
+                <li><a href="home.html">Home</a></li>
+                <li><a href="earth.html">Earth</a></li>
+                <li><a href="TESTE.html">TESTE</a></li>
+                <li><a href="MAPS2024.html">MAPS</a></li>
+                <!-- Outros links podem ser adicionados aqui -->
+            </ul>
+        </nav>
     </div>
-
-    <!-- Separação entre capítulos -->
-    <div class="section-separator"></div>
-
-    <!-- Navegação no canto superior direito -->
-    <nav>
-        <ul>
-            <li><a href="home.html">Home</a></li>
-            <li><a href="earth.html">Earth</a></li>
-            <li><a href="TESTE.html">TESTE</a></li>
-            <li><a href="MAPS2024.html">MAPS</a></li>
-            <!-- Outros links podem ser adicionados aqui -->
-        </ul>
-    </nav>
 </body>
 </html>
