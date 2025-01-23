@@ -1,15 +1,14 @@
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-    <meta charset='utf-8' />
+    <meta charset="utf-8" />
     <title>Mapbox Storytelling</title>
-    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
     <link rel="icon" type="image/x-icon"
         href="https://raw.githubusercontent.com/mapbox/assembly/publisher-staging/src/svgs/mapbox.svg">
-    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v3.8.0/mapbox-gl.js'></script>
-    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v3.8.0/mapbox-gl.css' rel='stylesheet' />
+    <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v3.8.0/mapbox-gl.js"></script>
+    <link href="https://api.tiles.mapbox.com/mapbox-gl-js/v3.8.0/mapbox-gl.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/mapbox-gl-globe-minimap@1.2.0/dist/bundle.js"></script>
     <script src="https://unpkg.com/scrollama"></script>
     <style>
@@ -17,7 +16,8 @@
             margin: 0;
             padding: 0;
             font-family: sans-serif;
-            background-color: false;
+            background-color: transparent; /* Define o fundo da página como preto */
+            color: white; /* Define a cor do texto como branco para melhor contraste */
         }
 
         a,
@@ -33,18 +33,7 @@
             position: fixed;
         }
 
-        #header {
-            margin: auto;
-            width: 100%;
-            position: relative;
-            z-index: 5;
-        }
-
-        #header {
-    display: none; /* Removido o cabeçalho */
-         }
-
-#footer {
+        #footer {
             width: 100%;
             min-height: 5vh;
             padding-top: 2vh;
@@ -54,6 +43,7 @@
             font-size: 13px;
             position: relative;
             z-index: 5;
+            background-color: #f1f1f1;
         }
 
         #features {
@@ -63,6 +53,11 @@
 
         .hidden {
             visibility: hidden;
+        }
+
+        .padding-australia-chapter {
+            padding-bottom: 5vh; /* Valor inicial, será ajustado dinamicamente */
+            z-index: 1000; /* Defina um z-index maior para garantir que fique por cima */
         }
 
         .centered {
@@ -85,19 +80,8 @@
             margin: auto;
         }
 
-        .light {
-            color: #444;
-            background-color: #fafafa;
-        }
-
-        .dark {
-            color: #fafafa;
-            background-color: #444;
-        }
-
         .step {
-            padding-bottom: 100vh;
-            /* margin-bottom: 10vh; */
+            padding-bottom: 100vh; /* Aumentar o scroll dos capítulos */
             opacity: 0.25;
         }
 
@@ -105,18 +89,11 @@
             opacity: 0.9;
         }
 
-        .step div {
-            padding: 25px 50px;
-            line-height: 25px;
-            font-size: 13px;
-        }
-
         .step img {
             width: 100%;
         }
 
         @media (max-width: 750px) {
-
             .centered,
             .lefty,
             .righty,
@@ -126,20 +103,125 @@
             }
         }
 
-        /* Fix issue on mobile browser where scroll breaks  */
+        /* Fix para navegadores móveis */
         .mapboxgl-canvas-container.mapboxgl-touch-zoom-rotate.mapboxgl-touch-drag-pan,
         .mapboxgl-canvas-container.mapboxgl-touch-zoom-rotate.mapboxgl-touch-drag-pan .mapboxgl-canvas {
             touch-action: unset;
+        }
+
+        /* Classes para os capítulos específicos */
+        .background-portugal {
+            background-image: url('./assets/AVEIRO.jpeg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            height: 100vh;
+            width: 100vw;
+            margin: 0;
+        }
+
+        .background-namibia {
+            background-image: url('./assets/SOS_4.JPG');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            height: 100vh;
+            width: 100vw;
+            margin: 0;
+        }
+
+        .resize-image {
+            width: 200px; /* Defina o tamanho desejado aqui */
+            height: auto;
+        }
+
+        .cover-image {
+            width: 100vw; /* Full screen */
+            height: 100vh; /* Full screen */
+            object-fit: cover;
+            z-index: 1000; /* Trazer a imagem para a frente */
+            position: relative; /* Fixar a imagem em relação à viewport */
+            top: 0; /* Ajuste a posição conforme necessário */
+            left: 0; /* Ajuste a posição conforme necessário */
+            display: block; /* Inicialmente visível */
+        }
+
+        .scroll-container {
+            padding-bottom: 125vh; /* Configurar o tempo/tamanho do scroll */
+        }
+
+        .white-scroll {
+            height: 100vh; /* Altura do scroll branco */
+            background-color: black; /* Cor de fundo branca */
+        }
+
+        /* Classes específicas para controlar o padding de cada capítulo */
+        .padding-world-chapter {
+            padding-bottom: 125vh;
+        }
+
+        .padding-namibia-chapter {
+            padding-bottom: 2000vh; /* Dobrar o valor para aumentar o tempo/tamanho do scroll */
+        }
+
+        .padding-rwanda-chapter {
+            padding-bottom: 0.1vh; /* Ajuste o valor conforme necessário */
+        }
+
+        .padding-argentina-chapter {
+            padding-bottom: 25vh;
+        }
+
+        .padding-geneva-chapter {
+            padding-bottom: 5vh;
+        }
+
+        .padding-australia-chapter {
+            padding-bottom: 10vh; /* Valor inicial, será ajustado dinamicamente */
+        }
+
+        .padding-dc-chapter {
+            padding-bottom: 125vh;
+        }
+
+        .padding-tokyo-chapter {
+            padding-bottom: 125vh;
+        }
+
+        .padding-sos14 {
+            padding-bottom: 2000vh;
+        }
+
+        .padding-sos18 {
+            padding-bottom: 500vh;
+        }
+
+        .full-screen-image {
+            width: 100vw;
+            height: 100vh;
+            object-fit: cover;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: -1; /* Para garantir que a imagem fique atrás do conteúdo */
+        }
+
+        .none {
+            display: none;
+        }
+
+        .scroll-padding {
+            padding-bottom: 125vh; /* Configurar o tempo/tamanho do scroll */
         }
     </style>
 </head>
 
 <body>
-
     <div id="map"></div>
     <div id="story"></div>
+    <img id="highlight-image" src="./assets/SOS_1.JPG" class="cover-image" /> <!-- Imagem inicial -->
 
-    <script src="./config.js"></script>
+    <script src="./config-map.js"></script>
     <script>
         var initLoad = true;
         var layerTypes = {
@@ -181,32 +263,6 @@
         var features = document.createElement('div');
         features.setAttribute('id', 'features');
 
-        var header = document.createElement('div');
-
-        if (config.title) {
-            var titleText = document.createElement('h1');
-            titleText.innerText = config.title;
-            header.appendChild(titleText);
-        }
-
-        if (config.subtitle) {
-            var subtitleText = document.createElement('h2');
-            subtitleText.innerText = config.subtitle;
-            header.appendChild(subtitleText);
-        }
-
-        if (config.byline) {
-            var bylineText = document.createElement('p');
-            bylineText.innerText = config.byline;
-            header.appendChild(bylineText);
-        }
-
-        if (header.innerText.length > 0) {
-            header.classList.add(config.theme);
-            header.setAttribute('id', 'header');
-            story.appendChild(header);
-        }
-
         config.chapters.forEach((record, idx) => {
             var container = document.createElement('div');
             var chapter = document.createElement('div');
@@ -220,6 +276,10 @@
             if (record.image) {
                 var image = new Image();
                 image.src = record.image;
+                if (record.id === 'Rwanda-chapter') {
+                    image.classList.add('cover'); // Adicione a classe 'cover-image' para definir o tamanho e estilo
+                    image.classList.add('scroll-padding'); // Adicione a classe 'scroll-padding' para controlar o padding do scroll
+                }
                 chapter.appendChild(image);
             }
 
@@ -246,6 +306,8 @@
 
         story.appendChild(features);
 
+        // Remover o código relacionado ao footer
+        /*
         var footer = document.createElement('div');
 
         if (config.footer) {
@@ -259,19 +321,29 @@
             footer.setAttribute('id', 'footer');
             story.appendChild(footer);
         }
+        */
 
         mapboxgl.accessToken = config.accessToken;
 
         var map = new mapboxgl.Map({
             container: 'map',
-            style: config.style,
+            style: 'mapbox://styles/mapbox/streets-v11', // Adicione o estilo do mapa
             center: config.chapters[0].location.center,
             zoom: config.chapters[0].location.zoom,
             bearing: config.chapters[0].location.bearing,
             pitch: config.chapters[0].location.pitch,
-            interactive: false,
-            projection: config.projection
+            interactive: false, // Desativa a interatividade do mapa
+            projection: 'globe', // Adicione a projeção do mapa
+            attributionControl: false // Desativa o controle de atribuição do Mapbox
         });
+
+        // Remover o controle de atribuição padrão, se necessário
+        map.on('load', function () {
+            map.removeControl(map._controls.find(control => control instanceof mapboxgl.AttributionControl));
+        });
+
+        // Adicionar outros controles, se necessário
+        map.addControl(new mapboxgl.NavigationControl());
 
         // Create a inset map if enabled in config.js
         if (config.inset) {
@@ -289,7 +361,6 @@
         // instantiate the scrollama
         var scroller = scrollama();
 
-
         map.on("load", function () {
             if (config.use3dTerrain) {
                 map.addSource('mapbox-dem', {
@@ -298,10 +369,7 @@
                     'tileSize': 512,
                     'maxzoom': 14
                 });
-                // add the DEM source as a terrain layer with exaggerated height
                 map.setTerrain({ 'source': 'mapbox-dem', 'exaggeration': 1.5 });
-
-                // add a sky layer that will show when the map is highly pitched
                 map.addLayer({
                     'id': 'sky',
                     'type': 'sky',
@@ -313,11 +381,10 @@
                 });
             };
 
-            // setup the instance, pass callback functions
             scroller
                 .setup({
                     step: '.step',
-                    offset: 0.5,
+                    offset: 0.0,
                     progress: true
                 })
                 .onStepEnter(async response => {
@@ -326,60 +393,174 @@
 
                     response.element.classList.add('active');
 
-                     // Verifica se o capítulo é 'DC-chapter' e aplica o Style (Mapa) específico
- if (chapter.id === 'DC-chapter'|| chapter.id === 'Geneva-chapter') {
-        map.setStyle(chapter.style);
-        
-    } else {
-        map.setStyle('mapbox://styles/tugaworldtravel/cm5wq05a8004501shbxlwclp6'); // Estilo padrão para outros capítulos
-    }
+                    // Verifica se o capítulo é 'Geneva-chapter' ou 'Namibia-chapter' e aplica o Style (Mapa) específico
+                    if (chapter.id === 'Geneva-chapter' || chapter.id === 'Namibia-chapter' || chapter.id === 'Australia-chapter' || chapter.id === 'Rwanda-chapter' || chapter.id === 'DC-chapter') {
+                        map.setStyle(chapter.style);
+                    } else {
+                        map.setStyle('mapbox://styles/tugaworldtravel/cm5wq05a8004501shbxlwclp6'); // Estilo padrão para outros capítulos
+                    }
 
-    map[chapter.mapAnimation || 'flyTo'](chapter.location);
-    
+                    if (config.showMarkers && (chapter.id === 'Geneva-chapter' || chapter.id === 'Argentina-chapter' || chapter.id === 'Tokyo-chapter')) {
+                        marker.setLngLat(chapter.location.center).addTo(map);
+                    } else {
+                        marker.remove();
+                    }
+
+                    // Mostrar a imagem antes do "world-chapter"
+                    var highlightImage = document.getElementById('highlight-image');
+                    if (chapter.id === 'world-chapter') {
+                        highlightImage.style.display = 'block';
+                    } else {
+                        highlightImage.style.display = 'none';
+                    }
+
                     map[chapter.mapAnimation || 'flyTo'](chapter.location);
-
-                    if (config.showMarkers && (chapter.id === 'Portugal-chapter' || chapter.id === 'Geneva-chapter'|| chapter.id === 'DC-chapter' || chapter.id === 'Argentina-chapter'|| chapter.id === 'Tokyo-chapter')) {
-    marker.setLngLat(chapter.location.center).addTo(map);
-} else {
-    marker.remove();
-}
-                    if (chapter.onChapterEnter.length > 0) {
-                        chapter.onChapterEnter.forEach(setLayerOpacity);
-                    }
-                    if (chapter.callback) {
-                        window[chapter.callback]();
-                    }
-                    if (chapter.rotateAnimation) {
-                        map.once('moveend', () => {
-                            const rotateNumber = map.getBearing();
-                            map.rotateTo(rotateNumber + 180, {
-                                duration: 30000, easing: function (t) {
-                                    return t;
-                                }
-                            });
-                        });
-                    }
-                    if (config.auto) {
-                        var next_chapter = (current_chapter + 1) % config.chapters.length;
-                        map.once('moveend', () => {
-                            document.querySelectorAll('[data-scrollama-index="' + next_chapter.toString() + '"]')[0].scrollIntoView();
-                        });
-                    }
                 })
                 .onStepExit(response => {
-                    var chapter = config.chapters.find(chap => chap.id === response.element.id);
                     response.element.classList.remove('active');
-                    if (chapter.onChapterExit.length > 0) {
-                        chapter.onChapterExit.forEach(setLayerOpacity);
-                    }
                 });
 
+            // Ajustar dinamicamente o padding-bottom dos capítulos
+            config.chapters.forEach((record, idx) => {
+                var chapterElement = document.getElementById(record.id);
+                if (record.id === 'world-chapter') {
+                    chapterElement.style.paddingBottom = '125vh'; // Diminuir o scroll do "World-chapter"
+                } if (record.id === 'Portugal-chapter') {
+                    chapterElement.style.paddingBottom = '125vh'; // Ajustar o tempo de scroll do "Rwanda-chapter"
+                } if (record.id === 'DC-chapter') {
+                    chapterElement.style.paddingBottom = '70vh'; // Ajustar o tempo de scroll do "Rwanda-chapter"        
+                } if (record.id === 'Namibia-chapter') {
+                    chapterElement.style.paddingBottom = '200vh'; // Dobrar o tempo de scroll do "Namibia-chapter"
+                } if (record.id === 'Geneva-chapter') {
+                    chapterElement.style.paddingBottom = '10vh'; // Ajustar o tempo de scroll do "Rwanda-chapter"
+                } if (record.id === 'Australia-chapter') {
+                    chapterElement.style.paddingBottom = '50vh'; // Ajustar o tempo de scroll do "Rwanda-chapter"  
+                } if (record.id === 'Argentina-chapter') {
+                    chapterElement.style.paddingBottom = '50vh'; // Ajustar o tempo de scroll do "Rwanda-chapter"
+                } if (record.id === 'Tokyo-chapter') {
+                    chapterElement.style.paddingBottom = '0.5vh'; // Ajustar o tempo de scroll do "Rwanda-chapter"
+                } if (record.id === 'Rwanda-chapter') {
+                    chapterElement.style.paddingBottom = '5vh'; // Ajustar o tempo de scroll do "Rwanda-chapter"
+                } if (record.id === 'China-chapter') {
+                    chapterElement.style.paddingBottom = '125vh'; // Ajustar o tempo de scroll do "Rwanda-chapter"                  
+                } else {
+                    chapterElement.style.paddingBottom = '125vh'; // Aumentar o tempo de scroll dos outros capítulos
+                }
+            });
 
-            if (config.auto) {
-                document.querySelectorAll('[data-scrollama-index="0"]')[0].scrollIntoView();
-            }
-        });    
+            // Inserir um novo elemento após o "World-chapter"
+            var worldChapter = document.getElementById('world-chapter');
+            var newElementContainer = document.createElement('div');
+            newElementContainer.classList.add('scroll-container'); // Adicione a classe 'scroll-container' para comportamento de scroll
+            newElementContainer.style.paddingBottom = '125vh'; // Dobrar o valor para configurar o tempo/tamanho do scroll
+            var newElement = document.createElement('img');
+            newElement.src = './assets/SOS_1.JPG'; // Adicione a imagem aqui
+            newElement.classList.add('cover-image'); // Adicione a classe para definir o tamanho e estilo
+            newElement.style.opacity = '1'; // Máxima opacidade
+            newElementContainer.appendChild(newElement);
+            worldChapter.parentNode.insertBefore(newElementContainer, worldChapter.nextSibling);
 
+            // Inserir um novo elemento após o "Argentina-chapter"
+            var argentinaChapter = document.getElementById('Argentina-chapter');
+            var newElementContainer = document.createElement('div');
+            newElementContainer.classList.add('scroll-container'); // Adicione a classe 'scroll-container' para comportamento de scroll
+            newElementContainer.style.paddingBottom = '125vh'; // Configurar o tempo/tamanho do scroll
+            var newElement = document.createElement('img');
+            newElement.src = './assets/SOS_14.JPG'; // Adicione a imagem aqui
+            newElement.classList.add('cover-image'); // Adicione a classe para definir o tamanho e estilo
+            newElement.style.opacity = '1'; // Máxima opacidade
+            newElementContainer.appendChild(newElement);
+            argentinaChapter.parentNode.insertBefore(newElementContainer, argentinaChapter.nextSibling);
+
+            // Inserir um novo elemento após o "Tokyo-chapter"
+            var tokyoChapter = document.getElementById('Tokyo-chapter');
+
+            var rwandaChapter = document.createElement('div');
+            rwandaChapter.setAttribute('id', 'Rwanda-chapter');
+            rwandaChapter.classList.add('scroll-padding'); // Adicione a classe 'scroll-padding' para controlar o padding do scroll
+            rwandaChapter.classList.add('step'); // Adicione a classe 'step' para comportamento de scroll
+            var rwandaImage = document.createElement('img');
+            rwandaImage.src = ''; // Adicione a imagem aqui
+            rwandaImage.classList.add('full-screen-image'); // Adicione a classe para definir o tamanho e estilo
+            rwandaChapter.appendChild(rwandaImage);
+            tokyoChapter.parentNode.insertBefore(rwandaChapter, tokyoChapter.nextSibling);
+
+            var genevaChapter = document.createElement('div');
+            genevaChapter.setAttribute
+        });
+
+        // Adicionar lógica para ocultar o mapa quando o "Rwanda-chapter" estiver ativo
+        var scroller = scrollama();
+
+        scroller
+            .setup({
+                step: '.step',
+                offset: 0,
+                debug: false
+            })
+            .onStepEnter(response => {
+                var element = response.element;
+                if (element.id === 'Rwanda-chapter') {
+                    document.getElementById('map').classList.add('none');
+                    document.querySelector('.cover').classList.add('show-image');
+                } else {
+                    document.getElementById('none').classList.remove('hide-map');
+                    document.querySelector('cover').classList.remove('show-image');
+                }
+            })
+            .onStepEnter(response => {
+                var element = response.element;
+                if (element.id === 'Australia-chapter') {
+                    document.getElementById('map').classList.add('none');
+                    document.querySelector('.cover').classList.add('show-image');
+                } else {
+                    document.getElementById('none').classList.remove('hide-map');
+                    document.querySelector('cover').classList.remove('show-image');
+                }    
+            });
+
+    </script>
+    <script>
+        var scroller = scrollama();
+
+        scroller
+            .setup({
+                step: '.step',
+                offset: 0.5,
+                progress: true
+            })
+            .onStepEnter(response => {
+                var chapter = config.chapters.find(chap => chap.id === response.element.id);
+                response.element.classList.add('active');
+                map[chapter.mapAnimation || 'flyTo'](chapter.location);
+            })
+            .onStepExit(response => {
+                response.element.classList.remove('active');
+            });
+
+        // Adicionar lógica para ocultar o mapa quando o "Rwanda-chapter" estiver ativo
+        scroller
+            .onStepEnter(response => {
+                var element = response.element;
+                if (element.id === 'Rwanda-chapter') {
+                    document.getElementById('map').classList.add('none');
+                    document.querySelector('.cover').classList.add('show-image');
+                } else {
+                    document.getElementById('map').classList.remove('none');
+                    document.querySelector('.cover').classList.remove('show-image');
+                }
+        // Adicionar lógica para ocultar o mapa quando o "Rwanda-chapter" estiver ativo
+        scroller
+            .onStepEnter(response => {
+                var element = response.element;
+                if (element.id === 'Australia-chapter') {
+                    document.getElementById('map').classList.add('none');
+                    document.querySelector('.cover').classList.add('show-image');
+                } else {
+                    document.getElementById('map').classList.remove('none');
+                    document.querySelector('.cover').classList.remove('show-image');
+                }        
+            });
     </script>
 
 </body>

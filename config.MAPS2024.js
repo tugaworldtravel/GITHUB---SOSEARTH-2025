@@ -98,6 +98,25 @@ var config = {
             onChapterExit: []
         },
         {
+            id: 'Australia-chapter',
+            alignment: 'center',
+            title: '',
+            image: './assets/SOS_8.JPG', // Adicione a imagem aqui
+            description: '',
+            location: {
+                center: [],
+                zoom: 5,
+                pitch: 0,
+                bearing: 0
+            },
+            mapAnimation: '',
+            rotateAnimation: false,
+            onChapterEnter: [],
+            onChapterExit: [],
+            hidden: false,
+            alignment: 'full'
+        },
+        {
             id: 'Argentina-chapter',
             alignment: 'fully',
             title: 'Buenos Aires',
@@ -148,6 +167,23 @@ var config = {
             onChapterExit: [],
             hidden: false,
             alignment: 'full'
+        },
+        {
+            id: 'China-chapter',
+            alignment: 'fully',
+            title: 'Buenos Aires',
+            image: './assets/SOS_20.JPG',
+            description: 'Buenos Aires, a capital da Argentina, conhecida pela cultura de tango.',
+            location: {
+                center: [116.39723, 39.9075],
+                zoom: 4,
+                pitch: 0,
+                bearing: 0
+            },
+            mapAnimation: 'flyTo',
+            onChapterEnter: [],
+            onChapterExit: []
         }
+        
     ]
 };
