@@ -56,11 +56,22 @@
 <body>
     <div class="overlay">
         <div class="login-container">
-            <form>
-                <input type="password" placeholder="Enter Password" required>
+            <form onsubmit="return checkPassword(event)">
+                <input type="password" id="password" placeholder="Enter Password" required>
                 <input type="submit" value="Login">
             </form>
         </div>
     </div>
+    <script>
+        function checkPassword(event) {
+            event.preventDefault();
+            const password = document.getElementById('password').value;
+            if (password === 'SAVE_EARTH2025') {
+                window.location.href = 'TESTE-INDEX.html';
+            } else {
+                alert('Incorrect password. Please try again.');
+            }
+        }
+    </script>
 </body>
 </html>
