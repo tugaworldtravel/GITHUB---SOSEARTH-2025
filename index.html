@@ -1,209 +1,72 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home - SOS EARTH</title>
+    <title>Login Page</title>
     <style>
-        /* Estilo para a Home Page */
         body, html {
-            margin: 0;
-            padding: 0;
             height: 100%;
-            font-family: Arial, sans-serif;
-            overflow-x: hidden;  /* Evita que a página tenha rolagem horizontal */
-        }
-
-        /* Estilo para a primeira imagem (AVEIRO.jpeg) */
-        .home-container {
-            background-image: url('assets/AVEIRO.jpeg'); /* Caminho da imagem na pasta assets */
-            background-size: cover;
-            background-position: center;
-            height: 100vh;  /* A imagem ocupa toda a tela na primeira seção */
+            margin: 0;
             display: flex;
             justify-content: center;
             align-items: center;
-            color: white;
+            background-image: url('assets/AVEIRO.jpeg');
+            background-size: cover;
+            background-position: center;
         }
-
-        /* Navegação no cabeçalho */
-        header {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background-color: rgba(0, 0, 0, 0.7); /* Fundo semi-transparente */
-            color: white;
-            z-index: 1000;
-        }
-
-        nav {
+        .login-box {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
             display: flex;
-            justify-content: flex-end;
-            padding: 10px 20px;
-        }
-
-        nav ul {
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
-            display: flex;
-        }
-
-        nav ul li {
-            margin: 0 10px;
-        }
-
-        nav ul li a {
-            color: white;
-            text-decoration: none;
-            font-weight: bold;
-        }
-
-        nav ul li a:hover {
-            color: #f0f0f0;
-        }
-
-        /* Título centralizado */
-        .home-text {
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
             text-align: center;
         }
-
-        .home-text h1 {
-            font-size: 15em;
-            margin-bottom: 0.1px;
-            font-family: 'Ave'; /* Adicione esta linha para mudar o tipo de letra */
-            color: #ffffff; /* Muda a cor do texto para vermelho */
-            font-weight: lighter; /* Muda a espessura das letras para negrito */
-            opacity: 0.5; /* Adiciona transparência ao texto */
-        }
-
-        .home-text p {
-            font-size: 1.5em;
-            margin-bottom: 5px;
-            font-family: 'Ave'; /* Adicione esta linha para mudar o tipo de letra */
-            color: #ffffff; /* Muda a cor do texto para verde */
-            font-weight: lighter; /* Muda a espessura das letras para normal */
-            opacity: 0.5; /* Adiciona transparência ao texto */
-        }
-
-        .autor {
-            font-size: 1em;
-            margin-bottom: 20px;
-            font-family: 'Ave'; /* Adicione esta linha para mudar o tipo de letra */
-            color: #ffffff; /* Muda a cor do texto para azul */
-            font-weight: lighter; /* Muda a espessura das letras para mais leve */
-            opacity: 0.5; /* Adiciona transparência ao texto */
-        }
-
-        /* Estilo para a segunda imagem (SOS_14.jpeg) */
-        .second-image-container {
-            height: 100vh;  /* A galeria ocupa toda a tela na segunda seção */
-            display: flex;
-            align-items: center;
-            color: white;
-            overflow-x: auto; /* Permite rolagem horizontal */
-            white-space: nowrap; /* Impede quebra de linha para as imagens */
-            position: relative;
-            background-color: rgb(255, 255, 255); /* Remove o fundo branco */
-            margin: 10; /* Remove qualquer margem padrão */
-            padding: 0; /* Remove qualquer padding padrão */
-        }
-
-        /* Estilo para a galeria de imagens */
-        .gallery-image {
-            display: inline-block;
-            width: calc(150vw - 0px); /* Cada imagem ocupa a largura total da viewport menos a borda */
-            height:75vh; /* Cada imagem ocupa a altura total da viewport */
-            object-fit: contain; /* Garante que a imagem não seja cortada */
-            border: 0.5px solid white; /* Adiciona uma borda branca fina */
-            margin: 0; /* Remove qualquer margem padrão */
-        }
-
-        /* Estilo para as setas de navegação */
-        .nav-arrow {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 2em;
-            color: white;
-            background-color: rgba(0, 0, 0, 0.5);
+        input[type="password"] {
+            width: 70%;
             padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            text-align: center;
+        }
+        input[type="submit"] {
+            width: 50%;
+            padding: 10px;
+            background: #52585f;
+            border: none;
+            border: 1px solid #000000;
+            color: white;
             cursor: pointer;
-            z-index: 1001;
+            text-align: center;
         }
-
-        .nav-arrow.left {
-            left: 10px;
-        }
-
-        .nav-arrow.right {
-            right: 10px;
+        input[type="submit"]:hover {
+            background: #35383c;
         }
     </style>
 </head>
 <body>
-    <!-- Cabeçalho com navegação -->
-    <header>
-        <!-- Navegação no canto superior direito -->
-        <nav>
-            <ul>
-                <li><a href="home.html">Home</a></li>
-                <li><a href="earth.html">Earth</a></li>
-                <li><a href="TESTE.html">TESTE</a></li>
-                <li><a href="MAPS2024.html">MAPS</a></li>
-                <!-- Outros links podem ser adicionados aqui -->
-            </ul>
-        </nav>
-    </header>
-
-    <!-- Primeira seção com a imagem "AVEIRO.jpeg" -->
-    <div class="home-container">
-        <div class="home-text">
-            <h1>SOS EARTH</h1>
-            <p>Plataforma de documentação e mapeamento dos eventos climáticos globais.</p>
-            <div class="autor"></div>
-            <div class="autor"></div>
-        </div>
-    </div>
-
-    <!-- Segunda seção com a galeria de imagens -->
-    <div class="second-image-container">
-        <!-- Setas de navegação -->
-        <div class="nav-arrow left" onclick="scrollGallery(-1)">&#10094;</div>
-        <div class="nav-arrow right" onclick="scrollGallery(1)">&#10095;</div>
-
-        <!-- Galeria de imagens -->
-        <img src="assets/SOS_1.JPG" class="gallery-image" alt="Imagem 1">
-        <img src="assets/SOS_2.JPG" class="gallery-image" alt="Imagem 2">
-        <img src="assets/SOS_3.JPG" class="gallery-image" alt="Imagem 3">
-        <img src="assets/SOS_4.JPG" class="gallery-image" alt="Imagem 4">
-        <img src="assets/SOS_5.JPG" class="gallery-image" alt="Imagem 5">
-        <img src="assets/SOS_6.JPG" class="gallery-image" alt="Imagem 6">
-        <img src="assets/SOS_7.JPG" class="gallery-image" alt="Imagem 7">
-        <img src="assets/SOS_8.JPG" class="gallery-image" alt="Imagem 8">
-        <img src="assets/SOS_9.JPG" class="gallery-image" alt="Imagem 9">
-        <img src="assets/SOS_10.JPG" class="gallery-image" alt="Imagem 10">
-        <img src="assets/SOS_11.JPG" class="gallery-image" alt="Imagem 11">
-        <img src="assets/SOS_12.JPG" class="gallery-image" alt="Imagem 12">
-        <img src="assets/SOS_13.JPG" class="gallery-image" alt="Imagem 13">
-        <img src="assets/SOS_14.JPG" class="gallery-image" alt="Imagem 14">
-        <img src="assets/SOS_15.JPG" class="gallery-image" alt="Imagem 15">
-        <img src="assets/SOS_16.JPG" class="gallery-image" alt="Imagem 16">
-        <img src="assets/SOS_17.JPG" class="gallery-image" alt="Imagem 17">
-        <img src="assets/SOS_18.JPG" class="gallery-image" alt="Imagem 18">
-        <img src="assets/SOS_19.JPG" class="gallery-image" alt="Imagem 19">
-        <img src="assets/SOS_20.JPG" class="gallery-image" alt="Imagem 20">
+    <div class="login-box">
+        <form id="loginForm">
+            <input type="password" id="password" placeholder="Enter password" required>
+            <input type="submit" value="Login">
+        </form>
     </div>
 
     <script>
-        function scrollGallery(direction) {
-            const container = document.querySelector('.second-image-container');
-            const scrollAmount = container.clientWidth;
-            container.scrollBy({
-                left: direction * scrollAmount,
-                behavior: 'smooth'
-            });
-        }
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const password = document.getElementById('password').value;
+            if (password === 'SAVE_EARTH') { // Replace 'correct_password' with the desired password
+                window.location.href = 'TESTE-INDEX.html';
+            } else {
+                alert('Incorrect password!');
+            }
+        });
     </script>
 </body>
 </html>
