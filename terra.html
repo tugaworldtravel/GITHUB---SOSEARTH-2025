@@ -277,7 +277,9 @@
             bearing: config.chapters[0].location.bearing,
             pitch: config.chapters[0].location.pitch,
             interactive: false,
-            projection: config.projection
+            projection: config.projection,
+            attributionControl: false, // Disable attribution control
+            logoPosition: 'top-left' // Move logo out of view
         });
 
         // Create a inset map if enabled in config.js

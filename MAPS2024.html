@@ -335,8 +335,9 @@
             bearing: config.chapters[0].location.bearing,
             pitch: config.chapters[0].location.pitch,
             interactive: false, // Desativa a interatividade do mapa
-            projection: 'globe', // Adicione a projeção do mapa
-            attributionControl: false // Desativa o controle de atribuição do Mapbox
+            projection: config.projection, // Adicione a projeção do mapa
+            attributionControl: false, // Desativa o controle de atribuição do Mapbox
+            logoPosition: 'top-left' // Move logo out of view
         });
 
         // Remover o controle de atribuição padrão, se necessário
