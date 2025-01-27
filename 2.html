@@ -1,1 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Map with Sidebar</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+    <link href="https://api.mapbox.com/mapbox-gl-js/v3.9.3/mapbox-gl.css" rel="stylesheet">
+    <script src="https://api.mapbox.com/mapbox-gl-js/v3.9.3/mapbox-gl.js"></script>
+    <style>
+        body { margin: 0; padding: 0; display: flex; }
+        #map { position: absolute; top: 0; bottom: 0; width: 100%; }
+        #sidebar { position: absolute; top: 0; left: 0; width: 25%; height: 100vh; overflow-y: auto; background-color: rgba(0, 0, 0, 0.7); padding: 20px; box-shadow: 2px 0 5px rgba(0,0,0,0.1); z-index: 1; color: white; }
+        .content-section { margin-bottom: 10px; }
+        .content-section img, .content-section video { max-width: 100%; height: auto; }
+        .form-section { margin-bottom: 20px; }
+        .form-section label { display: block; margin-bottom: 5px; }
+        .form-section input, .form-section textarea, .form-section button { width: 80%; padding: 10px; margin-bottom: 10px; border: none; border-radius: 5px; }
+        .form-section input, .form-section textarea { background-color: rgba(255, 255, 255, 0.2); color: white; }
+        .form-section button { background-color: #3386c0; color: white; cursor: pointer; }
+        .form-section button:hover { background-color: #4ea0da; }
+        .custom-file-upload {
+            display: inline-block;
+            padding: 10px 20px;
+            cursor: pointer;
+            background-color: #2a6ca0; /* Azul mais escuro */
+            color: white;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            width: 66%; /* Alinhar com a barra do Submit */
+        }
+        .custom-file-upload:hover {
+            background-color: #4ea0da;
+        }
+        input[type="file"] {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+    <div id="sidebar">
+        <div class="form-section">
+            <h2>Disaster Upload</h2>
+            <form id="content-form">
+                <label for="city">City:</label>
+                <input type="text" id="city" name="city" required><br>
+                <label for="district">District:</label>
+                <input type="text" id="district" name="district" required><br>
+                <label for="country">Country:</label>
+                <input type="text" id="country" name="country" required><br>
+                <label for="description">Description:</label>
+                <textarea id="description" name="description" required></textarea><br>
+                <label for="media" class="custom-file-upload">Upload</label>
+                <input type="file" id="media" name="media" accept="image/*,video/*" required><br>
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+        <div id="content-list"></div>
+    </div>
+    <script>
+        mapboxgl.accessToken = 'pk.eyJ1IjoidHVnYXdvcmxkdHJhdmVsIiwiYSI6ImNreDlhNml5MDA1bWgycW13bzhvaHF6NDMifQ.lYe7v4Yknj7sdPF7MV9kbQ';
+        const map = new mapboxgl.Map({
+            container: 'map',
+            style: 'mapbox://styles/tugaworldtravel/cm5wq05a8004501shbxlwclp6',
+            center: [0, 0],
+            zoom: 2
+        });
 
+        document.getElementById('content-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const city = document.getElementById('city').value;
+            const district = document.getElementById('district').value;
+            const country = document.getElementById('country').value;
+            const description = document.getElementById('description').value;
+            const media = document.getElementById('media').files[0];
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const mediaUrl = e.target.result;
+                const contentHtml = `
+                    <div class="content-section">
+                        <h3>${description}</h3>
+                        ${media.type.startsWith('image') ? `<img src="${mediaUrl}" alt="${description}">` : `<video controls><source src="${mediaUrl}" type="${media.type}">Your browser does not support the video tag.</video>`}
+                    </div>
+                `;
+                document.getElementById('content-list').insertAdjacentHTML('beforeend', contentHtml);
+
+                // Here you would need to convert city, district, and country to coordinates
+                // For simplicity, let's assume you have a function getCoordinates that does this
+                getCoordinates(city, district, country).then(coordinates => {
+                    new mapboxgl.Marker()
+                        .setLngLat(coordinates)
+                        .setPopup(new mapboxgl.Popup().setHTML(contentHtml))
+                        .addTo(map);
+                });
+            };
+            reader.readAsDataURL(media);
+        });
+
+        // Dummy function to simulate getting coordinates from city, district, and country
+        function getCoordinates(city, district, country) {
+            return new Promise((resolve) => {
+                // Replace this with actual geocoding logic
+                resolve([0, 0]); // Default coordinates
+            });
+        }
+    </script>
+</body>
+</html>
