@@ -9,6 +9,15 @@
 <style>
 body { margin: 0; padding: 0; }
 #map { position: absolute; top: 0; bottom: 0; width: 100%; }
+
+.mapboxgl-ctrl-logo {
+    display: none !important; /* Esconde o logotipo */
+    opacity: 0 !important; /* Define a transparência máxima */
+}
+
+.mapboxgl-ctrl-attrib {
+    opacity: 0 !important; /* Define a transparência máxima para o botão de informação */
+}
 </style>
 </head>
 <body>
@@ -43,22 +52,28 @@ body { margin: 0; padding: 0; }
     mapboxgl.accessToken = 'pk.eyJ1IjoidHVnYXdvcmxkdHJhdmVsIiwiYSI6ImNreDlhNml5MDA1bWgycW13bzhvaHF6NDMifQ.lYe7v4Yknj7sdPF7MV9kbQ';
     const map = new mapboxgl.Map({
         container: 'map',
-        style: 'mapbox://styles/mapbox/satellite-v9',
+        style: 'mapbox://styles/tugaworldtravel/cm6ew1wmi000s01s998fyhpy6',
         projection: 'globe', // Display the map as a globe, since satellite-v9 defaults to Mercator
-        zoom: 1.5,
-        center: [10, 0], // Start at Europe (longitude 10) on the equator (latitude 0)
+        zoom: 2.5, // Aumentar o zoom
+        center: [10, 20], // Rodar mais a norte da linha do equador
         attributionControl: false, // Disable attribution control
         logoPosition: 'top-left' // Move logo out of view
     });
 
+    map.addControl(new mapboxgl.AttributionControl({ compact: true }), 'top-right');
+
     map.on('style.load', () => {
-        // map.setFog({}); // Remove or comment this line to eliminate the background
+        // Ensure the logo and attribution control are always hidden
+        document.querySelectorAll('.mapboxgl-ctrl-logo, .mapboxgl-ctrl-attrib').forEach(function(element) {
+            element.style.display = 'none';
+            element.style.opacity = '0';
+        });
     });
 
     // The following values can be changed to control rotation speed:
 
     // At low zooms, complete a revolution every two minutes.
-    const secondsPerRevolution = 120;
+    const secondsPerRevolution = 200;
     // Above zoom level 5, do not rotate.
     const maxSpinZoom = 5;
     // Rotate at intermediate speeds between zoom levels 3 and 5.
@@ -79,7 +94,7 @@ body { margin: 0; padding: 0; }
             }
             const center = map.getCenter();
             center.lng += distancePerSecond; // Increase longitude to rotate from left to right
-            center.lat = 0; // Ensure the latitude remains at the equator
+            center.lat = 40; // Ensure the latitude remains at the equator
             // Smoothly animate the map over one second.
             // When this animation is complete, it calls a 'moveend' event.
             map.easeTo({ center, duration: 1000, easing: (n) => n });

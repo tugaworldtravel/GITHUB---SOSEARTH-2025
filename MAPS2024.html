@@ -215,6 +215,11 @@
         .scroll-padding {
             padding-bottom: 125vh; /* Configurar o tempo/tamanho do scroll */
         }
+
+        .mapboxgl-ctrl-logo {
+            display: none !important; /* Esconde o logotipo */
+            opacity: 0 !important; /* Define a transparência máxima */
+        }
     </style>
 </head>
 
@@ -520,6 +525,12 @@ var rwandaChapter = document.createElement('div');
                     document.querySelector('cover').classList.remove('show-image');
                 }    
             });
+
+        // Ensure the logo is always hidden
+        document.querySelectorAll('.mapboxgl-ctrl-logo').forEach(function(logo) {
+            logo.style.display = 'none';
+            logo.style.opacity = '0';
+        });
 
     </script>
     <script>
