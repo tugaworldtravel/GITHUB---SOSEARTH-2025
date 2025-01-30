@@ -18,41 +18,61 @@ body { margin: 0; padding: 0; }
 .mapboxgl-ctrl-attrib {
     opacity: 0 !important; /* Define a transparência máxima para o botão de informação */
 }
+
+#layer-controls {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: rgba(0, 0, 0, 0.7); /* Fundo escuro e semi-transparente */
+    color: white; /* Texto branco */
+    padding: 10px;
+    border-radius: 8px; /* Bordas arredondadas */
+    z-index: 1;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para um efeito sofisticado */
+}
+
+#layer-controls label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+#btn-spin {
+    font:
+        bold 12px/20px 'Helvetica Neue',
+        Arial,
+        Helvetica,
+        sans-serif;
+    background-color: #3386c0;
+    color: #fff;
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    z-index: 1;
+    border: none;
+    width: 200px;
+    margin-left: -100px;
+    display: block;
+    cursor: pointer;
+    padding: 10px 20px;
+    border-radius: 3px;
+}
+#btn-spin:hover {
+    background-color: #4ea0da;
+}
 </style>
 </head>
 <body>
-<style>
-    #btn-spin {
-        font:
-            bold 12px/20px 'Helvetica Neue',
-            Arial,
-            Helvetica,
-            sans-serif;
-        background-color: #3386c0;
-        color: #fff;
-        position: absolute;
-        top: 20px;
-        left: 50%;
-        z-index: 1;
-        border: none;
-        width: 200px;
-        margin-left: -100px;
-        display: block;
-        cursor: pointer;
-        padding: 10px 20px;
-        border-radius: 3px;
-    }
-    #btn-spin:hover {
-        background-color: #4ea0da;
-    }
-</style>
 <div id="map"></div>
+<div id="layer-controls">
+    <label><input type="checkbox" id="layer1" checked> Storm</label>
+    <label><input type="checkbox" id="layer2" checked> Extreme Temperature</label>
+</div>
 <button id="btn-spin">Pause rotation</button>
 <script>
     mapboxgl.accessToken = 'pk.eyJ1IjoidHVnYXdvcmxkdHJhdmVsIiwiYSI6ImNreDlhNml5MDA1bWgycW13bzhvaHF6NDMifQ.lYe7v4Yknj7sdPF7MV9kbQ';
     const map = new mapboxgl.Map({
         container: 'map',
-        style: 'mapbox://styles/tugaworldtravel/cm6ew1wmi000s01s998fyhpy6',
+        style: 'mapbox://styles/tugaworldtravel/cm6gb39to00ci01r56bn18zgl',
         projection: 'globe', // Display the map as a globe, since satellite-v9 defaults to Mercator
         zoom: 2.5, // Aumentar o zoom
         center: [10, 20], // Rodar mais a norte da linha do equador
@@ -67,6 +87,48 @@ body { margin: 0; padding: 0; }
         document.querySelectorAll('.mapboxgl-ctrl-logo, .mapboxgl-ctrl-attrib').forEach(function(element) {
             element.style.display = 'none';
             element.style.opacity = '0';
+        });
+
+        // Adicionar camadas de tileset
+        map.addSource('storm', {
+            type: 'vector',
+            url: 'mapbox://tugaworldtravel.8k5e3ggj'
+        });
+
+        map.addLayer({
+            id: 'tileset1',
+            type: 'fill',
+            source: 'storm',
+            'source-layer': 'Storm', // Substitua pelo nome da camada do seu tileset
+            paint: {
+                'fill-color': '#888888',
+                'fill-opacity': 0.4
+            }
+        });
+
+        map.addSource('extreme-temperature', {
+            type: 'vector',
+            url: 'mapbox://tugaworldtravel.tugaworldtravel.8k5e3ggj'
+        });
+
+        map.addLayer({
+            id: 'tileset2',
+            type: 'line',
+            source: 'extreme-temperature',
+            'source-layer': 'Extreme Temperature', // Substitua pelo nome da camada do seu tileset
+            paint: {
+                'line-color': '#ff0000',
+                'line-width': 2
+            }
+        });
+
+        // Event listeners for layer visibility toggles
+        document.getElementById('layer1').addEventListener('change', function(e) {
+            map.setLayoutProperty('tileset1', 'visibility', e.target.checked ? 'visible' : 'none');
+        });
+
+        document.getElementById('layer2').addEventListener('change', function(e) {
+            map.setLayoutProperty('tileset2', 'visibility', e.target.checked ? 'visible' : 'none');
         });
     });
 
